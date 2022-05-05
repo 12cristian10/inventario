@@ -14,7 +14,7 @@
 		<div class="columns">
 		  	<div class="column">
 		    	<div class="control">
-					<label>Código de barra</label>
+					<label>Numero de factura</label>
 				  	<input class="input" type="text" name="producto_codigo" pattern="[a-zA-Z0-9- ]{1,70}" maxlength="70" required >
 				</div>
 		  	</div>
@@ -25,6 +25,13 @@
 				</div>
 		  	</div>
 		</div>
+        </div class="columns">
+		  	<div class="column">
+		    	<div class="control">
+					<label>peso</label>
+				  	<input class="input" type="text" name="producto_peso" pattern="[0-9.]{1,25}" maxlength="25" required >
+				</div>
+		  	</div>
 		<div class="columns">
 		  	<div class="column">
 		    	<div class="control">
@@ -41,8 +48,8 @@
 		  	<div class="column">
 				<label>Categoría</label><br>
 		    	<div class="select is-rounded">
-				  	<select name="producto_categoria" >
-				    	<option value="" selected="" >Seleccione una opción</option>
+				  	<select name="producto_categoria">
+				    	<option value="" selected="">Seleccione una opción</option>
 				    	<?php
     						$categorias=conexion();
     						$categorias=$categorias->query("SELECT * FROM categoria");
@@ -61,7 +68,7 @@
 		<div class="columns">
 			<div class="column">
 				<label>Foto o imagen del producto</label><br>
-				<div class="file is-small has-name">
+				<div class="file is-small has-name" id="file-img">
 				  	<label class="file-label">
 				    	<input class="file-input" type="file" name="producto_foto" accept=".jpg, .png, .jpeg" >
 				    	<span class="file-cta">

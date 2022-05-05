@@ -1,6 +1,7 @@
 <div class="container is-fluid mb-6">
 	<h1 class="title">Productos</h1>
-	<h2 class="subtitle">Actualizar imagen de producto</h2>
+	<h2 class="subtitle">Actualizar imagen de producto</h2> 
+
 </div>
 
 <div class="container pb-6 pt-6">
@@ -50,15 +51,19 @@
 
 				<input type="hidden" name="img_up_id" value="<?php echo $datos['producto_id']; ?>">
 
-				<div class="file has-name is-horizontal is-justify-content-center mb-6">
+				<div class="file has-name is-horizontal is-justify-content-center mb-6" id="file-img" >
 				  	<label class="file-label">
 				    	<input class="file-input" type="file" name="producto_foto" accept=".jpg, .png, .jpeg" >
 				    	<span class="file-cta">
 				      		<span class="file-label">Imagen</span>
 				    	</span>
-				    	<span class="file-name">JPG, JPEG, PNG. (MAX 3MB)</span>
-				  	</label>
-				</div>
+				    	<span class="file-name">JPG, JPEG, PNG. (MAX 3MB)</span> 
+						
+                         
+
+				  	</label> 
+				</div> 
+
 				<p class="has-text-centered">
 					<button type="submit" class="button is-success is-rounded">Actualizar</button>
 				</p>

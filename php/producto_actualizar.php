@@ -25,7 +25,8 @@
 
     /*== Almacenando datos ==*/
     $codigo=limpiar_cadena($_POST['producto_codigo']);
-	$nombre=limpiar_cadena($_POST['producto_nombre']);
+	$nombre=limpiar_cadena($_POST['producto_nombre']); 
+    $peso=limpiar_cadena($_POST['producto_peso']); 
 
 	$precio=limpiar_cadena($_POST['producto_precio']);
 	$stock=limpiar_cadena($_POST['producto_stock']);
@@ -33,7 +34,7 @@
 
 
 	/*== Verificando campos obligatorios ==*/
-    if($codigo=="" || $nombre=="" || $precio=="" || $stock=="" || $categoria==""){
+    if($codigo=="" || $nombre=="" || $precio=="" || $stock=="" || $categoria=="" || $peso==""){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -54,12 +55,22 @@
         ';
         exit();
     }
-
+    
     if(verificar_datos("[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}",$nombre)){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
                 El NOMBRE no coincide con el formato solicitado
+            </div>
+        ';
+        exit();
+    } 
+
+    if(verificar_datos("[0-9.]{1,30}",$peso)){
+        echo '
+            <div class="notification is-danger is-light">
+                <strong>¡Ocurrio un error inesperado!</strong><br>
+                El PESO no coincide con el formato solicitado
             </div>
         ';
         exit();
@@ -139,11 +150,12 @@
 
     /*== Actualizando datos ==*/
     $actualizar_producto=conexion();
-    $actualizar_producto=$actualizar_producto->prepare("UPDATE producto SET producto_codigo=:codigo,producto_nombre=:nombre,producto_precio=:precio,producto_stock=:stock,categoria_id=:categoria WHERE producto_id=:id");
+    $actualizar_producto=$actualizar_producto->prepare("UPDATE producto SET producto_codigo=:codigo,producto_nombre=:nombre,producto_peso=:peso,producto_precio=:precio,producto_stock=:stock,categoria_id=:categoria WHERE producto_id=:id");
 
     $marcadores=[
         ":codigo"=>$codigo,
         ":nombre"=>$nombre,
+        ":peso"=>$peso,
         ":precio"=>$precio,
         ":stock"=>$stock,
         ":categoria"=>$categoria,

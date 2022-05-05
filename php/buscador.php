@@ -1,14 +1,15 @@
 <?php
 	$modulo_buscador=limpiar_cadena($_POST['modulo_buscador']);
 
-	$modulos=["usuario","categoria","producto"];
+	$modulos=["usuario","categoria","producto","venta"];
 
 	if(in_array($modulo_buscador, $modulos)){
 		
 		$modulos_url=[
 			"usuario"=>"user_search",
 			"categoria"=>"category_search",
-			"producto"=>"product_search"
+			"producto"=>"product_search",
+			"venta"=>"sale_search"
 		];
 
 		$modulos_url=$modulos_url[$modulo_buscador];

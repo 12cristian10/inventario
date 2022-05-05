@@ -6,14 +6,16 @@
 	/*== Almacenando datos ==*/
 	$codigo=limpiar_cadena($_POST['producto_codigo']);
 	$nombre=limpiar_cadena($_POST['producto_nombre']);
+    $peso=limpiar_cadena($_POST['producto_peso']);
 
 	$precio=limpiar_cadena($_POST['producto_precio']);
 	$stock=limpiar_cadena($_POST['producto_stock']);
 	$categoria=limpiar_cadena($_POST['producto_categoria']);
 
 
+
 	/*== Verificando campos obligatorios ==*/
-    if($codigo=="" || $nombre=="" || $precio=="" || $stock=="" || $categoria==""){
+    if($codigo=="" || $nombre=="" || $peso=="" || $precio=="" || $stock=="" || $categoria=="" ){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -44,6 +46,17 @@
         ';
         exit();
     }
+
+    if(verificar_datos("[0-9.]{1,50}",$peso)){
+        echo '
+            <div class="notification is-danger is-light">
+                <strong>¡Ocurrio un error inesperado!</strong><br>
+                El PESO no coincide con el formato solicitado
+            </div>
+        ';
+        exit();
+    }
+
 
     if(verificar_datos("[0-9.]{1,25}",$precio)){
         echo '
@@ -95,6 +108,20 @@
     }
     $check_nombre=null;
 
+    /*==verificando peso ==*/
+    $check_peso=conexion();
+    $check_peso=$check_peso->query("SELECT producto_peso FROM producto WHERE producto_peso='$peso'");
+    if($check_peso->rowCount()>0){
+        echo '
+            <div class="notification is-danger is-light">
+                <strong>¡Ocurrio un error inesperado!</strong><br>
+                El CODIGO de BARRAS ingresado ya se encuentra registrado, por favor elija otro
+            </div>
+        ';
+        exit();
+    }
+    $check_peso=null;
+
 
     /*== Verificando categoria ==*/
     $check_categoria=conexion();
@@ -109,8 +136,8 @@
         exit();
     }
     $check_categoria=null;
-
-
+    
+    
     /* Directorios de imagenes */
 	$img_dir='../img/producto/';
 
@@ -189,14 +216,16 @@
 		$foto="";
 	}
 
+    
 
 	/*== Guardando datos ==*/
     $guardar_producto=conexion();
-    $guardar_producto=$guardar_producto->prepare("INSERT INTO producto(producto_codigo,producto_nombre,producto_precio,producto_stock,producto_foto,categoria_id,usuario_id) VALUES(:codigo,:nombre,:precio,:stock,:foto,:categoria,:usuario)");
+    $guardar_producto=$guardar_producto->prepare("INSERT INTO producto(producto_codigo,producto_nombre,producto_peso,producto_precio,producto_stock,producto_foto,categoria_id,usuario_id) VALUES(:codigo,:nombre,:peso,:precio,:stock,:foto,:categoria,:usuario)");
 
     $marcadores=[
         ":codigo"=>$codigo,
         ":nombre"=>$nombre,
+        ":peso"=>$peso,
         ":precio"=>$precio,
         ":stock"=>$stock,
         ":foto"=>$foto,

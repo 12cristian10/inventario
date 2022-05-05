@@ -2,7 +2,7 @@
 
     <div class="navbar-brand">
         <a class="navbar-item" href="index.php?vista=home">
-        <img src="./img/logo.png" width="65" height="28">
+        <img src="./img/buff_logo.png" width="180" height="90">
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -43,6 +43,16 @@
                     <a href="index.php?vista=product_list" class="navbar-item">Lista</a>
                     <a href="index.php?vista=product_category" class="navbar-item">Por categoría</a>
                     <a href="index.php?vista=product_search" class="navbar-item">Buscar</a>
+                </div>
+            </div> 
+            
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">Ventas</a>
+
+                <div class="navbar-dropdown">
+                    <a href="index.php?vista=sale_new" class="navbar-item">Nueva</a>
+                    <a href="index.php?vista=sale_list" class="navbar-item">Lista</a>
+                    <a href="index.php?vista=sale_search" class="navbar-item">Buscar</a>
                 </div>
             </div>
 

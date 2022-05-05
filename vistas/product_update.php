@@ -30,7 +30,7 @@
 		<div class="columns">
 		  	<div class="column">
 		    	<div class="control">
-					<label>Código de barra</label>
+					<label>Numero de factura</label>
 				  	<input class="input" type="text" name="producto_codigo" pattern="[a-zA-Z0-9- ]{1,70}" maxlength="70" required value="<?php echo $datos['producto_codigo']; ?>" >
 				</div>
 		  	</div>
@@ -41,6 +41,13 @@
 				</div>
 		  	</div>
 		</div>
+		<div class="columns">
+		  	<div class="column">
+		    	<div class="control">
+					<label>Peso</label>
+				  	<input class="input" type="text" name="producto_peso" pattern="[0-9.]{1,25}" maxlength="25" required value="<?php echo $datos['producto_peso']; ?>" >
+				</div>
+		  	</div>
 		<div class="columns">
 		  	<div class="column">
 		    	<div class="control">

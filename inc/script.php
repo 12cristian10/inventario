@@ -1,3 +1,4 @@
+<script src='./js/jquery-3.6.0.min.js'></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
@@ -25,3 +26,7 @@
     });
 </script>
 <script src="./js/ajax.js"></script>
+<script src="./js/img_select.js"></script> 
+<script src="./js/input_select.js"></script>
+
+

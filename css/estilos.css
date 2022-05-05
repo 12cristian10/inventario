@@ -10,6 +10,7 @@ body,html{
 	align-items: center;
 }
 .main-container > .login,
+.main-container > .inicio,
 .main-container > .hero-body{
 	height: auto;
 	width: 100%;
