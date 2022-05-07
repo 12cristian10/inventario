@@ -19,40 +19,40 @@ require "../php/main.php";
         <div class="column">
 		        <div>
 		    		<label>Codigo</label>
-		    		<input class="input" type="text" name="codigo_p" value="'.$row['producto_codigo'].'" disabled>
+		    		<input class="input" type="text" name="codigo_p" id="codigo_p" value="'.$row['producto_codigo'].'" disabled>
 		    	</div>
 		    </div>
 
 		    <div class="column">
 		    	<div class="control">
 		    		<label>Peso</label>
-		    		<input class="input" type="text" name="peso_p" value="'.$row['producto_peso'].'" disabled>
+		    		<input class="input" type="text" name="peso_p" id="peso_p" value="'.$row['producto_peso'].'" disabled>
 		    	</div>
 		    </div>
 
 		    <div class="column">
 		    	<div class="control">
 		    		<label>Precio</label>
-		    		<input class="input" type="text" name="precio_p" value="'.$row['producto_precio'].'" disabled>
+		    		<input class="input" type="text" name="precio_p" id="precio_p" value="'.$row['producto_precio'].'" disabled>
 		    	</div>
 		    </div>
 
 		    <div class="column">
 		    	<div class="control">
 		    		<label>Stock</label>
-		    		<input class="input" type="text" name="stock_p" value="'.$row['producto_stock'].'" disabled>
+		    		<input class="input" type="text" name="stock_p" id="stock_p" value="'.$row['producto_stock'].'" disabled>
 		    	</div>
 		    </div>
 
 		    <div class="column">
 		    	<div class="control">
 		    		<labe>Cantidad requerida</label>
-		    		<input class="input" type="text" name="unidades_p" pattern="[0-9]{1,25}" maxlength="25"  required>
+		    		<input class="input" type="text" name="unidades_p" id="unidades_p" pattern="[0-9]{1,25}" maxlength="25"  required>
 		    	</div>
 		    </div>
 
 		    <div class="column pt-5">
-			    <button type="submit" class="button is-info is-rounded">Agregar</button>
+			    <button type="submit" id="add_product" class="button is-info is-rounded">Agregar</button>
             </div>
         </div>        
 	';
@@ -61,10 +61,6 @@ require "../php/main.php";
 
 	   $productos=null; 
 
-}else{
-	echo'<h2> no hay </h2>';
 }
-
-
 
 ?> 

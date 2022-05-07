@@ -44,15 +44,21 @@
                     <input class="input" type="text" name="venta_codigo" value="<?php echo $codigo; ?>" readonly required >
                 </div>    
 			</div>
-		</div>
+		</div> 
+        <div>
+            <?php
+                  require './vistas/add_product.php';
+            ?>
+        </div>
+
+        <div id="tabla"></div>
+ 
         <div class="columns is-centered py-4">
                 <p class="has-text-centered">
 			        <button type="submit" class="button is-info is-rounded">Guardar</button>
 		        </p>                 
             </div>
 	</form>
-    <?php
-              require './vistas/add_product.php';
-              require './vistas/pv_list.php';
-        ?>
+    
+        
 </div>

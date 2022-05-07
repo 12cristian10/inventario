@@ -1,10 +1,14 @@
 <?php
+    
+	require_once "../inc/session_start.php";
+	$codigo=$_SESSION['venta_codigo'];
+
 	$inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
 	$tabla="";
     
     $campos="producto.producto_id,producto.producto_codigo,producto.producto_nombre,producto.producto_peso,producto.producto_precio,producto.producto_stock,producto_vendido.pv_id,producto_vendido.producto_id,producto_vendido.pv_stock,producto_vendido.pv_total,producto_vendido.venta_codigo";
 
-    $consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto_vendido INNER JOIN producto ON producto_vendido.producto_id=producto.producto_id ORDER BY producto_vendido.venta_codigo ASC LIMIT $inicio,$registros";
+    $consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto_vendido INNER JOIN producto ON producto_vendido.producto_id=producto.producto_id WHERE producto_vendido.venta_codigo=$codigo ORDER BY producto_vendido.venta_codigo ASC LIMIT $inicio,$registros";
 	
 
 	$conexion=conexion();
@@ -75,7 +79,7 @@
 		}else{
 			$tabla.='
 				<tr class="has-text-centered" >
-					<td colspan="7">
+					<td colspan="8">
 						No hay registros en el sistema
 					</td>
 				</tr>

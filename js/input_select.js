@@ -8,9 +8,15 @@
             type:"POST",
             data:'producto=' + id,
             success:function(data){
-                $("#probando").html(data);
+                $("#datos_producto").html(data);
             }
             
         });
     });
-});
+});  
+
+/*$(document).ready(function(){
+    $("#tabla").load("./vistas/pv_list.php");
+});*/
+
+

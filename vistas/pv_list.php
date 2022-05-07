@@ -4,8 +4,9 @@
 </div>
 
 <div class="container pb-6 pt-6">
-    <?php
-        require_once "./php/main.php";
+    <?php 
+        
+        require_once "../php/main.php";
 
         # Eliminar categoria #
         if(isset($_GET['pv_id_del'])){
@@ -27,6 +28,6 @@
         $busqueda="";
 
         # Paginador categoria #
-        require_once "./php/pv_lista.php";
+        require_once "../php/pv_lista.php";
     ?>
 </div>

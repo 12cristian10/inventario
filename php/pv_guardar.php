@@ -6,7 +6,6 @@ $codigo=$_SESSION['venta_codigo'];
 $producto_id=$_POST['producto'];
 $cantidad=limpiar_cadena($_POST['unidades_p']);
 
-
 /*== Verificando campos obligatorios ==*/
 if($cantidad==""){
 	echo '
@@ -67,7 +66,7 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
        ];
    
        $guardar_p_sale->execute($marcadores);
-   
+    
        if($guardar_p_sale->rowCount()==1){
            
         $stock=$stock-$cantidad;

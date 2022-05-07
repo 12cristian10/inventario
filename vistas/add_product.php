@@ -9,7 +9,7 @@ if($productos->rowCount()>0){
 
     <div class="form-rest mb-4 mt-4"></div>
 
-	<form action="./php/pv_guardar.php" method="POST" class="FormularioAjax" autocomplete="off">
+	<form action="./php/pv_guardar.php" method="POST" class="FormularioVentas" autocomplete="off">
 
 			
 	    <div class="columns">
@@ -38,40 +38,40 @@ if($productos->rowCount()>0){
 		       </div>
 			</div>
 
-            <div class="columns is-vcentered" id="probando">
+            <div class="columns is-vcentered" id="datos_producto">
 			   <div class="column">
 	    	    	<div class="control">
 	    				<label>Codigo</label>
-	    			  	<input class="input" type="text" name="codigo_p" disabled>
+	    			  	<input class="input" type="text" name="codigo_p" id="codigo_p" disabled>
 	    			</div>
 	    	  	</div>
 	    	  	<div class="column">
 	    	    	<div class="control">
 	    				<label>Peso</label>
-	    			  	<input class="input" type="text" name="peso_p" disabled>
+	    			  	<input class="input" type="text" name="peso_p" id="peso_p" disabled>
 	    			</div>
 	    	  	</div>
 	    		<div class="column">
 	    	    	<div class="control">
 	    				<label>Precio</label>
-	    			  	<input class="input" type="text" name="precio_p" disabled>
+	    			  	<input class="input" type="text" name="precio_p" id="precio_p" disabled>
 	    			</div>
 	    	  	</div>
 	    		  <div class="column">
 	    	    	<div class="control">
 	    				<label>Stock</label>
-	    			  	<input class="input" type="text" name="stock_p" disabled>
+	    			  	<input class="input" type="text" name="stock_p" id="stock_p" disabled>
 	    			</div>
 	    	  	</div>
 	    		  <div class="column">
 	    	    	<div class="control">
 	    				<labe>Cantidad requerida</label>
-	    			  	<input class="input" type="text" name="unidades_p" pattern="[0-9]{1,25}" maxlength="25"  required>
+	    			  	<input class="input" type="text" name="unidades_p" id="unidades_p" pattern="[0-9]{1,25}" maxlength="25"  required>
 	    			</div>
 	    	  	</div>
 				<div class="column pt-5">
 				
-				 <button type="submit" class="button is-info is-rounded">Agregar</button>
+				 <button type="submit" id="add_product" class="button is-info is-rounded">Agregar</button>
 					 
 			    </div>  
 			</div>
