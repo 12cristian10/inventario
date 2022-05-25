@@ -4,8 +4,7 @@ require "../php/main.php";
  if(isset($_POST['producto'])){
     
 	$producto_id=$_POST['producto'];
-
-	
+    
 	$productos=conexion();
 	$productos=$productos->query("SELECT * FROM producto WHERE producto_id = $producto_id");
 		
@@ -15,45 +14,42 @@ require "../php/main.php";
 
 
 		foreach($productos as $row){
+			
 			echo'
-        <div class="column">
+            <div class="column">
 		        <div>
 		    		<label>Codigo</label>
-		    		<input class="input" type="text" name="codigo_p" id="codigo_p" value="'.$row['producto_codigo'].'" disabled>
+		    		<input class="input" type="text" name="codigo_p" id="codigo_p" value="'.$row['producto_codigo'].'" readonly>
 		    	</div>
 		    </div>
 
 		    <div class="column">
 		    	<div class="control">
 		    		<label>Peso</label>
-		    		<input class="input" type="text" name="peso_p" id="peso_p" value="'.$row['producto_peso'].'" disabled>
+		    		<input class="input" type="text" name="peso_p" id="peso_p" value="'.$row['producto_peso'].'" readonly>
 		    	</div>
 		    </div>
 
 		    <div class="column">
 		    	<div class="control">
 		    		<label>Precio</label>
-		    		<input class="input" type="text" name="precio_p" id="precio_p" value="'.$row['producto_precio'].'" disabled>
+		    		<input class="input" type="text" name="precio_p" id="precio_p" value="'.$row['producto_precio'].'" readonly>
 		    	</div>
 		    </div>
 
 		    <div class="column">
 		    	<div class="control">
 		    		<label>Stock</label>
-		    		<input class="input" type="text" name="stock_p" id="stock_p" value="'.$row['producto_stock'].'" disabled>
+		    		<input class="input" type="text" name="stock_p" id="stock_p" value="'.$row['producto_stock'].'" readonly>
 		    	</div>
 		    </div>
 
 		    <div class="column">
 		    	<div class="control">
 		    		<labe>Cantidad requerida</label>
-		    		<input class="input" type="text" name="unidades_p" id="unidades_p" pattern="[0-9]{1,25}" maxlength="25"  required>
+		    		<input class="input" type="number" name="unidades_p" id="unidades_p"  min="1" required>
 		    	</div>
 		    </div>
-
-		    <div class="column pt-5">
-			    <button type="submit" id="add_product" class="button is-info is-rounded">Agregar</button>
-            </div>
         </div>        
 	';
 		 }

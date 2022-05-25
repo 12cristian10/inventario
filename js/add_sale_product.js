@@ -1,5 +1,4 @@
-const form_ajax=document.querySelectorAll(".FormularioVentas");
-
+const form_ajax=document.querySelector("#FormularioProductos");
 function send_form_ajax(e){
     e.preventDefault();
 
@@ -26,13 +25,39 @@ function send_form_ajax(e){
         .then(respuesta =>{ 
             let contenedor=document.querySelector(".form-rest");
             contenedor.innerHTML = respuesta;
-            console.log("b");
             $("#tabla").load("./vistas/pv_list.php");
         });
     }
 
 }
 
-form_ajax.forEach(formularios => {
-    formularios.addEventListener("click",send_form_ajax);
+//form_ajax.addEventListener("submit",send_form_ajax); 
+ 
+/*const Enviar = document.querySelectorAll('.add_product');
+$(document).ready(function(){
+    $('.add_product').click(function(){
+        alert(1);
+        
+        alert(1); 
+        var datos=$('#FormularioProductos').serialize();
+        console.log(datos);
+        
+    });
 });
+
+$(document).ready(function(){
+    $('#guardar').click(function(){
+        var datos=$('#FormularioVentas').serialize();
+        $.ajax({
+            type:"POST",
+            url:"./php/venta_guardar.php",
+            data:datos,
+            success:function(data){
+                $(".form-rest").html(data);
+            }
+        });
+
+    
+    });
+});*/
+

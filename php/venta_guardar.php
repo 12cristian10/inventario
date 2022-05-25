@@ -3,15 +3,16 @@
 require_once "../php/main.php";
 
    $codigo=$_POST['venta_codigo'];
-
+   $fecha=$_POST['venta_fecha'];
    $check_producto=conexion();
    $check_producto=$check_producto->query("SELECT venta_codigo FROM producto_vendido WHERE venta_codigo='$codigo'");
    if($check_producto->rowCount()>0){
 
         $guardar_venta=conexion();
-        $guardar_venta=$guardar_venta->prepare("INSERT INTO venta(venta_codigo) VALUES(:codigo)"); 
+        $guardar_venta=$guardar_venta->prepare("INSERT INTO venta(venta_codigo,venta_fecha) VALUES(:codigo,:fecha)"); 
         
-        $guardar_venta->execute([":codigo"=>$codigo]); 
+        $guardar_venta->execute([":codigo"=>$codigo,
+                                ":fecha"=>$fecha]); 
     
         
         if($guardar_venta->rowCount()==1){
@@ -42,6 +43,6 @@ require_once "../php/main.php";
    }
    $check_producto=null;
    
-	/*== Guardando datos ==*/
+
     
 
