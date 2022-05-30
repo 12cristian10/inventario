@@ -48,7 +48,7 @@
                     <td>
                         <a href="" class="button is-link is-rounded is-small">Ver productos</a>
                     </td> 
-                    <td> </td>
+                    <td>'.$rows['venta_total'].'</td>
                     <td>
                         <a href="" class="button is-success is-rounded is-small">Actualizar</a>
                     </td>

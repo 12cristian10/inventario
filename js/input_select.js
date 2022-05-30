@@ -1,7 +1,7 @@
  $(document).ready(function(){
     $("#select_product").on('change', function(){
         var id = $(this).val();
-        
+    
 
         $.ajax({
             url:"./php/agregar_producto.php",

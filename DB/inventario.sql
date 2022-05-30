@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-05-2022 a las 03:45:38
+-- Tiempo de generación: 30-05-2022 a las 20:43:22
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pdo`
+-- Base de datos: `inventario`
 --
 
 -- --------------------------------------------------------
@@ -39,8 +39,7 @@ CREATE TABLE `categoria` (
 
 INSERT INTO `categoria` (`categoria_id`, `categoria_nombre`, `categoria_ubicacion`) VALUES
 (1, 'bebidas', ''),
-(2, 'no pedecedero', ''),
-(3, 'fruta', '');
+(2, 'no pedecedero', '');
 
 -- --------------------------------------------------------
 
@@ -85,14 +84,6 @@ CREATE TABLE `producto` (
   `usuario_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
---
--- Volcado de datos para la tabla `producto`
---
-
-INSERT INTO `producto` (`producto_id`, `producto_codigo`, `producto_nombre`, `producto_peso`, `producto_precio`, `producto_stock`, `producto_foto`, `categoria_id`, `usuario_id`) VALUES
-(23, '554546', 'Arroz diana', '500.00', '2000.00', 15, 'Arroz_diana_66.jpg', 2, 1),
-(24, '65756436', 'Leche colanta', '900.00', '3700.00', 0, 'Leche_colanta_30.jpg', 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -106,15 +97,6 @@ CREATE TABLE `producto_vendido` (
   `pv_stock` int(25) NOT NULL,
   `pv_total` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `producto_vendido`
---
-
-INSERT INTO `producto_vendido` (`pv_id`, `venta_codigo`, `producto_id`, `pv_stock`, `pv_total`) VALUES
-(100, '1000000001', 23, 8, 16000),
-(101, '1000000002', 23, 5, 10000),
-(102, '1000000002', 24, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -150,6 +132,7 @@ CREATE TABLE `venta` (
   `venta_id` int(11) NOT NULL,
   `venta_codigo` varchar(10) NOT NULL DEFAULT '0',
   `venta_fecha` date DEFAULT NULL,
+  `venta_total` int(20) NOT NULL,
   `cliente_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -207,7 +190,7 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `categoria_id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `categoria_id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -219,13 +202,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `producto_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `producto_id` int(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_vendido`
 --
 ALTER TABLE `producto_vendido`
-  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

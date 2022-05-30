@@ -1,5 +1,5 @@
 <?php
-require "../php/main.php";
+require_once "../php/main.php";
 
  if(isset($_POST['producto'])){
     
@@ -47,7 +47,7 @@ require "../php/main.php";
 		    <div class="column">
 		    	<div class="control">
 		    		<labe>Cantidad requerida</label>
-		    		<input class="input" type="number" name="unidades_p" id="unidades_p"  min="1" required>
+		    		<input class="input" type="text" name="unidades_p" id="unidades_p"  pattern="[1-9]{1,25}" required>
 		    	</div>
 		    </div>
         </div>        

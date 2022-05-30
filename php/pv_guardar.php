@@ -2,12 +2,15 @@
 require_once "../inc/session_start.php";
 require_once "../php/main.php";
 
+
 $codigo=$_SESSION['venta_codigo'];
 $producto_id=$_POST['producto'];
 $cantidad=limpiar_cadena($_POST['unidades_p']);
+$total=0;
 
 /*== Verificando campos obligatorios ==*/
-if($cantidad==""){
+if($cantidad=="" || $producto_id=="null"){
+    
 	echo '
 		<div class="notification is-danger is-light">
 			<strong>¡Ocurrio un error inesperado!</strong><br>
@@ -18,7 +21,8 @@ if($cantidad==""){
 }
 
 /*== Verificando integridad de los datos ==*/
-if(verificar_datos("[0-9]{1,25}",$cantidad)){
+if(verificar_datos("[1-9]{1,25}",$cantidad)){
+    
 	echo '
 		<div class="notification is-danger is-light">
 			<strong>¡Ocurrio un error inesperado!</strong><br>
@@ -38,6 +42,7 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
        $stock = $resultado['producto_stock'];
          
 	   if($cantidad > $resultado['producto_stock']){
+       
 		    echo '
 		        <div class="notification is-danger is-light">
 		        	<strong>¡Ocurrio un error inesperado!</strong><br>
@@ -70,7 +75,7 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
        if($guardar_p_sale->rowCount()==1){
            
         $stock=$stock-$cantidad;
-
+        $total=$subtotal+$total;
         $actualizar_producto=conexion();
         $actualizar_producto=$actualizar_producto->prepare("UPDATE producto SET producto_stock=:stock WHERE producto_id=:id");
 
@@ -80,6 +85,7 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
         ];
         
         $actualizar_producto->execute($marcadores);
+        
            echo '
                <div class="notification is-info is-light">
                    <strong>¡PRODUCTO REGISTRADO!</strong><br>
@@ -87,7 +93,7 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
                </div>
            ';
        }else{
-
+       
    
            echo '
                <div class="notification is-danger is-light">

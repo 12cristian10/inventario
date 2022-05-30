@@ -1,6 +1,6 @@
 <?php
-    
-	require_once "../inc/session_start.php";
+    require_once dirname(__DIR__)."/inc/session_start.php";
+
 	$codigo=$_SESSION['venta_codigo'];
 
 	$inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
@@ -34,7 +34,7 @@
                     <th>Precio unitario</th>
                     <th>Cantidad vendida</th>
                     <th>Subtotal</th>
-                    <th colspan="2">Opciones</th>
+                    <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,9 +54,6 @@
                     <td>'.$rows['pv_stock'].'</td>
                     <td>'.$rows['pv_total'].'</td>
                     <td>
-                        <a href="" class="button is-link is-rounded is-small">Ver productos</a>
-                    </td> 
-                    <td>
                         <a href="'.$url.$pagina.'&pv_id_del='.$rows['pv_id'].'" class="button is-danger is-rounded is-small">Eliminar</a>
                     </td> 
                     
@@ -65,22 +62,16 @@
             $contador++;
 		}
 		$pag_final=$contador-1;
+
 	}else{
 		if($total>=1){
 			$tabla.='
+			
 				<tr class="has-text-centered" >
 					<td colspan="5">
 						<a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
 							Haga clic acá para recargar el listado
 						</a>
-					</td>
-				</tr>
-			';
-		}else{
-			$tabla.='
-				<tr class="has-text-centered" >
-					<td colspan="8">
-						No hay registros en el sistema
 					</td>
 				</tr>
 			';
@@ -90,13 +81,9 @@
 
 	$tabla.='</tbody></table></div>';
 
+
 	if($total>0 && $pagina<=$Npaginas){
-		$tabla.='<p class="has-text-right">Mostrando categorías <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
 	}
 
 	$conexion=null;
 	echo $tabla;
-
-	if($total>=1 && $pagina<=$Npaginas){
-		echo paginador_tablas($pagina,$Npaginas,$url,7);
-	}
