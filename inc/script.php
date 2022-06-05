@@ -30,6 +30,7 @@
 <script src="./js/img_select.js"></script> 
 <script src="./js/input_select.js"></script>
 <script src="./js/modal.js"></script>
-<!-- <script src="./js/ventaAjax.js"></script>  -->
+<script src="./js/Factura.js"></script>
+
 
 

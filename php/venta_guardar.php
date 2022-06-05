@@ -8,7 +8,8 @@ require_once "../php/main.php";
    $fecha=date("Y-m-d");
    $cliente=limpiar_cadena($_POST['cliente']);
    $importe_total=$_SESSION['venta_total'];
-
+   $productos_total=$_SESSION['venta_stock'];
+   $codfactura=$_SESSION['venta_factura'];
     /*== Verificando campos obligatorios ==*/
     if($cliente=="null"){
         echo '
@@ -30,12 +31,15 @@ require_once "../php/main.php";
 
 
         $guardar_venta=conexion();
-        $guardar_venta=$guardar_venta->prepare("INSERT INTO venta(venta_codigo,venta_fecha,venta_total,cliente_id) VALUES(:codigo,:fecha,:total,:cliente)"); 
+        $guardar_venta=$guardar_venta->prepare("INSERT INTO venta(venta_codigo,venta_fecha,venta_stock,venta_total,cliente_id,usuario_id,venta_factura) VALUES(:codigo,:fecha,:stock,:total,:cliente,:usuario,:factura)"); 
         
         $guardar_venta->execute([":codigo"=>$codigo,
                                 ":fecha"=>$fecha,
+                                ":stock"=>$productos_total,
                                 ":total"=>$importe_total,
-                                ":cliente"=>$cliente]); 
+                                ":cliente"=>$cliente,
+                                ":usuario"=>$_SESSION['id'],
+                                ":factura"=>$codfactura]); 
     
         
         if($guardar_venta->rowCount()==1){
@@ -45,6 +49,7 @@ require_once "../php/main.php";
                     La venta se registro con exito
                 </div>
             ';
+           
         }else{
             echo '
                 <div class="notification is-danger is-light">
@@ -65,7 +70,6 @@ require_once "../php/main.php";
 ';
    }
    $check_producto=null;
-   
 
-    
-
+ 
+?>

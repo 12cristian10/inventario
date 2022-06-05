@@ -21,16 +21,16 @@ if($cantidad=="" || $producto_id=="null"){
 }
 
 /*== Verificando integridad de los datos ==*/
-if(verificar_datos("[1-9]{1,25}",$cantidad)){
+if((int) $cantidad <=0){
     
 	echo '
 		<div class="notification is-danger is-light">
 			<strong>¡Ocurrio un error inesperado!</strong><br>
-			La CANTIDAD REQUERIDA no coincide con el formato solicitado
+			La CANTIDAD REQUERIDA debe ser un valor mayor a 0
 		</div>
 	';
 	exit();
-} 
+}
 
    /*==verificando peso ==*/
    $check_cantidad=conexion();

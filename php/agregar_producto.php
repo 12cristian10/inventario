@@ -42,16 +42,26 @@ require_once "../php/main.php";
 		    		<label>Stock</label>
 		    		<input class="input" type="text" name="stock_p" id="stock_p" value="'.$row['producto_stock'].'" readonly>
 		    	</div>
-		    </div>
+		    </div>';
+        
+		if($row['producto_stock']==0){
+			echo'<div class="column">
+			        <div class="notification is-warning is-light has-text-centered">
+			                <strong>¡PRODUCTO AGOTADO!</strong><br>
+		            </div>
+           		</div>
+           	</div>';
+		}else{
+			echo'<div class="column">
+		    	    <div class="control">
+		    		    <labe>Cantidad requerida</label>
+		    		    <input class="input" type="number" name="unidades_p" id="unidades_p"  min="1" required>
+    		    	</div>
+    		    </div>
+            </div>';
 
-		    <div class="column">
-		    	<div class="control">
-		    		<labe>Cantidad requerida</label>
-		    		<input class="input" type="text" name="unidades_p" id="unidades_p"  pattern="[1-9]{1,25}" required>
-		    	</div>
-		    </div>
-        </div>        
-	';
+		}	
+		
 		 }
 	}
 

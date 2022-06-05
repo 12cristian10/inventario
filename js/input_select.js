@@ -15,8 +15,4 @@
     });
 });  
 
-/*$(document).ready(function(){
-    $("#tabla").load("./vistas/pv_list.php");
-});*/
-
 

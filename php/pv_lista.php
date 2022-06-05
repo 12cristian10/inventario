@@ -19,6 +19,8 @@
 
 	$total = $conexion->query("SELECT FOUND_ROWS()");
 	$total = (int) $total->fetchColumn();
+    
+	echo'<input  type="hidden" name="pv_solicitados" id="pv_solicitados" value="'.$total.'">';
 
 	$Npaginas =ceil($total/$registros);
 
@@ -68,7 +70,7 @@
 			$tabla.='
 			
 				<tr class="has-text-centered" >
-					<td colspan="5">
+					<td colspan="8">
 						<a href="'.$url.'1" class="button is-link is-rounded is-small mt-4 mb-4">
 							Haga clic acá para recargar el listado
 						</a>
@@ -81,9 +83,13 @@
 
 	$tabla.='</tbody></table></div>';
 
-
 	if($total>0 && $pagina<=$Npaginas){
+		$tabla.='<p class="has-text-right">Mostrando productos <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
 	}
 
 	$conexion=null;
 	echo $tabla;
+
+	if($total>=1 && $pagina<=$Npaginas){
+		echo paginador_tablas($pagina,$Npaginas,$url,7);
+	}

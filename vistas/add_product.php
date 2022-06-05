@@ -67,7 +67,7 @@
         			<div class="column">
         				<div class="control">
         					<labe>Cantidad requerida</label>
-        					  <input class="input" type="text" name="unidades_p" id="unidades_p" pattern="[1-9]{1,25}" required>
+        					  <input class="input" type="number" name="unidades_p" id="unidades_p" min="1" required>
         				</div>
         			</div>
         			

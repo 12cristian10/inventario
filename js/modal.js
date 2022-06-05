@@ -20,11 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const $target = document.getElementById(modal);
 
     $trigger.addEventListener('click', () => {
+  
       openModal($target);
     });
   });
    
- 
+
+
   // Add a click event on various child elements to close the parent modal
   (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete') || []).forEach(($close) => {
     const $target = $close.closest('.modal');
@@ -48,13 +50,41 @@ document.addEventListener('DOMContentLoaded', () => {
     
     $close.addEventListener('click', () => { 
 
+  if(!($('#select_product').val() == null || $('#unidades_p').val()<=0 || $('#unidades_p').val() > parseInt($('#stock_p').val(),10))){
+      closeModal($target);
+    }
+   
+
+    });
+  });
+
+ (document.querySelectorAll('#confirmarVenta') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
+
+    $close.addEventListener('click', () => { 
+      closeModal($target);
+    });
+  }); 
+
+  (document.querySelectorAll('#mostrarVenta') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
     
-  if($('#select_product').val() == null || $('#unidades_p').val()==""){
-        console.log("no se envian datos");
-      }else{  
-        $("#addNewProduct").load("./vistas/add_product.php");
-        closeModal($target);
-      } 
+    $close.addEventListener('click', () => { 
+     
+      closeModal($target);
+      
+  
+    });
+    
+  });
+
+  (document.querySelectorAll('#descartarVenta') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
+  
+    $close.addEventListener('click', () => { 
+      
+      closeModal($target);
+      location.reload();
 
     });
   });

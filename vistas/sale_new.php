@@ -15,15 +15,22 @@
     if($check_code->rowCount()>0){
                         
         $code=$datos['venta_id']+1;
-        
-        if($datos['venta_id']<1000 && $datos['venta_id']>99){
-            $codigo='1000000'.$code;
-         }
-         else if($datos['venta_id']<100 && $datos['venta_id']>9){
-            $codigo='10000000'.$code;
-         }else{
+
+        if($code>=0 && $code<=9){
             $codigo='100000000'.$code; 
-        }  
+          
+         }
+         else{
+            if($code>=10 && $code<=99){
+                $codigo='10000000'.$code;
+            }else{
+              
+                $codigo='1000000'.$code;  
+            
+            }
+
+         }
+           
                      
     }else{ 
         $limpiar_incremento=conexion();
@@ -33,14 +40,15 @@
 
         $code=1;
         $codigo="100000000". $code;
-    }
+    } 
+    
     $_SESSION['venta_fecha']=$fecha;
     $_SESSION['venta_codigo']=$codigo;
+    $_SESSION['venta_factura']=$code;
     $check_codigo=null; 
 
 
-?>
-
+?>      
 <div id="contenido" class="container is-fluid mb-6">
 	<h1 class="title">Ventas</h1>
 	<h2 class="subtitle">Nueva venta</h2>
@@ -83,11 +91,11 @@
         </select>
       </div>
     </div>
+
     <?php 
       require_once dirname(__DIR__)."/php/main.php";
       $productos=conexion();
       $productos=$productos->query("SELECT * FROM producto");
-      
       if($productos->rowCount()>0){
     ?>
 
@@ -97,7 +105,8 @@
 		  <?php  
 		    require_once dirname(__DIR__)."/php/main.php";
         
-		  	# Eliminar categoria #
+		  	# Eliminar producto vendido #
+     
 		  	if(isset($_GET['pv_id_del'])){
 		  		require_once dirname(__DIR__)."/php/pv_eliminar.php";
 		  	}
@@ -116,30 +125,35 @@
 		  	$registros=15;
 		  	$busqueda="";
 	  
-		  	# Paginador categoria #
+		  	# Paginador de producto vendido #
 		  	require_once dirname(__DIR__)."/php/pv_lista.php";
 
         $obtener_total=conexion();
-        $obtener_total=$obtener_total->query("SELECT SUM(pv_total) AS total FROM producto_vendido WHERE venta_codigo='$codigo'");
+        $obtener_total=$obtener_total->query("SELECT SUM(pv_stock) AS numproductos,SUM(pv_total) AS total FROM producto_vendido WHERE venta_codigo='$codigo'");
         $venta_total=$obtener_total->fetch();
            
         $total=$venta_total['total'];
+        
+        $numProductos=$venta_total['numproductos'];
+ 
         $_SESSION['venta_total']=$total;
-        echo '<h3 class="subtitle">Importe total: '.$total.'</h3>';
+        $_SESSION['venta_stock']=$numProductos;
+        echo '<h4 class="title is-4">Importe total: '.$total.'</h4>
+              <h4 class="title is-4">Nro. de productos: '.$numProductos.'</h4>
+              <input type="hidden" id="cantidadPv" value="'.$numProductos.'">';
         $obtener_total=null;
 
 		  ?>	
 	 </div> 
-   <div class="container pt-4 ">
-    <button type="button" id="agregarpv" class="js-modal-trigger button is-info is-rounded" data-target="addNewProduct">Agregar producto</button>
-   </div> 
-    <div class="container pt-2 ">
+    
       <?php
       require_once dirname(__DIR__).'/vistas/add_product.php';
       ?>
-    </div> 
+    <div class="container pt-4 ">
+    <button type="button" id="agregarpv" class="js-modal-trigger button is-info is-rounded" data-target="addNewProduct">Agregar productos</button>
+</div> 
     <p class="has-text-centered">
-		  <button type="button" id="guardarVenta" class="button is-info is-rounded" >Terminar venta</button>
+		  <button type="button" id="guardarVenta" class="js-modal-trigger button is-info is-rounded" data-target="addNewSale">Terminar venta</button>
 	  </p>    
   </div>
 
@@ -177,15 +191,12 @@ else{
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title">Confirmar venta</p>
+      <p class="modal-card-title">Acciones</p>
       <button class="delete" aria-label="close"></button>
     </header>
-    <section class="modal-card-body">
-	   
-    </section>
     <footer class="modal-card-foot">
-      <button id="confirmarVenta" class="button is-success">Confirmar venta</button>
-      <button id="mostrarVenta" class="button is-success">Guardar e imprimir venta</button>
+      <button id="confirmarVenta" class="button is-success">Guardar venta</button>
+      <button id="mostrarVenta" class="button is-success">Guardar y mostrar</button>
       <button id="descartarVenta" class="button">Descartar venta</button>
     </footer>
   </div>
