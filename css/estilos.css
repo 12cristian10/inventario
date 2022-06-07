@@ -20,4 +20,9 @@ body,html{
 
 .form-inline{
 	display: inline-flex;
-}
+} 
+
+
+body .margenespdf {
+	margin: 45mm 8mm 2mm 8mm;
+  }

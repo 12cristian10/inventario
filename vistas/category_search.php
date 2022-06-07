@@ -4,18 +4,16 @@
 </div>
 
 <div class="container pb-6 pt-6">
-    <?php
-        require_once "./php/main.php";
+    <?php require_once "./php/main.php";
 
         if(isset($_POST['modulo_buscador'])){
             require_once "./php/buscador.php";
         }
 
-        if(!isset($_SESSION['busqueda_categoria']) && empty($_SESSION['busqueda_categoria'])){
-    ?>
+        if(!isset($_SESSION['busqueda_categoria']) && empty($_SESSION['busqueda_categoria'])){?>
     <div class="columns">
         <div class="column">
-            <form action="" method="POST" autocomplete="off" >
+            <form action="index.php?vista=category_search" method="POST" autocomplete="off" >
                 <input type="hidden" name="modulo_buscador" value="categoria">
                 <div class="field is-grouped">
                     <p class="control is-expanded">
@@ -31,7 +29,7 @@
     <?php }else{ ?>
     <div class="columns">
         <div class="column">
-            <form class="has-text-centered mt-6 mb-6" action="" method="POST" autocomplete="off" >
+            <form class="has-text-centered mt-6 mb-6" action="index.php?vista=category_search" method="POST" autocomplete="off" >
                 <input type="hidden" name="modulo_buscador" value="categoria"> 
                 <input type="hidden" name="eliminar_buscador" value="categoria">
                 <p>Estas buscando <strong>“<?php echo $_SESSION['busqueda_categoria']; ?>”</strong></p>
@@ -63,6 +61,5 @@
 
             # Paginador categoria #
             require_once "./php/categoria_lista.php";
-        } 
-    ?>
+        }?>
 </div>

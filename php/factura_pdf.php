@@ -14,7 +14,7 @@
     }
 
  
-$celdas="venta.venta_id,venta.venta_codigo,venta.venta_fecha,venta.venta_stock,venta.venta_total,venta.venta_factura,cliente.cliente_id,cliente.cliente_nombre,cliente.cliente_apellido,cliente.cliente_documento,cliente.cliente_telefono,cliente.cliente_email,cliente.cliente_direccion,venta.usuario_id,usuario.usuario_nombre,usuario.usuario_apellido";
+$celdas="venta.venta_id,venta.venta_codigo,venta.venta_fecha,venta.venta_stock,venta.venta_total,venta.venta_factura,cliente.cliente_id,cliente.cliente_nombre,cliente.cliente_apellido,cliente.cliente_documento,cliente.cliente_telefono,cliente.cliente_email,cliente.cliente_direccion,cliente.cliente_ciudad,venta.usuario_id,usuario.usuario_nombre,usuario.usuario_apellido";
 
         $consulta="SELECT $celdas FROM venta INNER JOIN cliente ON venta.cliente_id=cliente.cliente_id INNER JOIN usuario ON venta.usuario_id=usuario.usuario_id WHERE venta.venta_codigo='$codp'";
 
@@ -30,76 +30,143 @@ $celdas="venta.venta_id,venta.venta_codigo,venta.venta_fecha,venta.venta_stock,v
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>BUFF KEY</title>
-        <link rel="stylesheet" href="http://localhost/inventario/css/bulma.min.css">
-        <link rel="stylesheet" href="http://localhost/inventario/css/estilos.css">
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BUFF KEY</title>
+    <link rel="stylesheet" href="http://localhost/inventario/css/bulma.min.css">
+    <link rel="stylesheet" href="http://localhost/inventario/css/estilos.css">
+</head>
+<body class="margenespdf">
+    <div class="container is-fluid py-5" id="imprimible"></div>
+        <div class="container is-fluid mb-4 pr-4 mx-4">
 
-	<h1 class="title">Factura de venta</h1>
-	
-    <div class="columns">
-        <div class="column">
-            <p class="text is-size-5"><strong>Nro. de factura:</strong>  <?php echo $infoVenta['venta_factura']; ?></p>
-		</div>
-        <div class="column">
-            <p class="text is-size-5"><strong>Codigo de venta:</strong>  <?php echo $infoVenta['venta_codigo']; ?></p>
-		</div>
-	</div>
-    <div class="columns">
-        <div class="column">
-            <p class="text is-size-5"><strong>Fecha de emision:</strong>  <?php echo $infoVenta['venta_fecha']; ?></p>
-	    </div>
-    </div>
-    <div class="columns">
-        <div class="column">
-            <p class="text is-size-5"><strong>Numero de documento:</strong>  <?php echo $infoVenta['cliente_documento']; ?></p>
-		</div>
+            <div class="container pb-6 py-4"> 
+                <table class="table is-fullwidth">
+                    <tr>
+                        <td><h2 class="has-text-weight-bold is-size-2">Factura de venta</h2></td>
+                        <td class=""><img src="http://localhost/inventario/img/buff_logo.png" width="220" height="110"></td>
+                    </tr>
+                </table>
 
-        <div class="column">
-            <p class="text is-size-5"><strong>Cliente:</strong>  <?php echo $infoVenta['cliente_nombre']." ".$infoVenta['cliente_apellido']; ?></p>
-	    </div>
-    </div>
 
-    <div class="columns">
-         <div class="column">
-            <p class="text is-size-5"><strong>Productos de la venta:</strong></p>
-            </div>   
-	</div>
-    <div class="table">
-        <?php
-         
-       require_once dirname(__DIR__)."/php/factura_lista.php";
-
-       echo '
-            <p class="text has-text-right is-size-5"><strong>Importe total:</strong>  '.$infoVenta['venta_total'].'<br></p> 
-             
-             <p class="text has-text-right is-size-5"><strong>Nro. de productos:</strong>  '.$infoVenta['venta_stock'].'</p>
+                <div class="column py-4">
+                    <p class="text is-size-5"><strong>Nro. de factura:</strong>  <?php echo $infoVenta['venta_factura']; ?></p>
+                    <p class="text is-size-5"><strong>Codigo de venta:</strong>  <?php echo $infoVenta['venta_codigo']; ?></p>
+                    <p class="text is-size-5"><strong>Fecha de emision:</strong>  <?php echo $infoVenta['venta_fecha']; ?></p>
+                    <p class="text is-size-5"><strong>Vendedor:</strong>  <?php echo $infoVenta['usuario_nombre'].' '.$infoVenta['usuario_apellido']; ?><br><br></p>  
+                </div> 
+                <div class="column">
+                    <table class="table is-bordered ">
+                        <tr>
+                            <td colspan="6"> <p class="has-text-centered"><strong>Datos del cliente</strong></p></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cliente:</strong></td><td colspan="2"><?php echo $infoVenta['cliente_nombre']." ".$infoVenta['cliente_apellido']; ?></td>
+                            <td><strong>Nro. de documento:</strong></td><td colspan="2"><?php echo $infoVenta['cliente_documento']; ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Telefono:</strong></td><td colspan="2"><?php echo $infoVenta['cliente_telefono']; ?></td>
+                            <td><strong>E-mail:</strong></td><td colspan="2"><?php echo $infoVenta['cliente_email']; ?></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ciudad:</strong></td><td colspan="2"><?php echo $infoVenta['cliente_ciudad']; ?></td>
+                            <td><strong>Direccion:</strong></td><td colspan="2"><?php echo $infoVenta['cliente_direccion']; ?></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="column pt-3">
+                    <p class="text is-size-5"><br><br><strong>Productos de la venta:</strong></p>
+                </div>  
+                <div class="columms mx-4 pr-6">
+                    <?php
+                     
+                     require_once dirname(__DIR__)."/inc/session_start.php";
+                     require_once dirname(__DIR__)."/php/main.php";
+                    
+                     if(isset($_GET['sale_cod'])){
+                         $codigo=$_GET['sale_cod'];
+                     }else{
+                         $codigo= $_SESSION['venta_codigo'];
+                     }
+                
+                         
+                         $tabla="";
+                         
+                         $campos="producto.producto_id,producto.producto_codigo,producto.producto_nombre,producto.producto_peso,producto.producto_precio,producto.producto_stock,producto_vendido.pv_id,producto_vendido.producto_id,producto_vendido.pv_stock,producto_vendido.pv_total,producto_vendido.venta_codigo";
+                     
+                         $consulta="SELECT SQL_CALC_FOUND_ROWS $campos FROM producto_vendido INNER JOIN producto ON producto_vendido.producto_id=producto.producto_id WHERE producto_vendido.venta_codigo=$codigo ORDER BY producto_vendido.venta_codigo ASC";
+                         
+                     
+                         $conexion=conexion();
+                     
+                         $data = $conexion->query($consulta);
+                     
+                         $data = $data->fetchAll();
+                     
+                     
+                         $tabla.='
+                         <div class="table-container">
+                             <table class="table is-bordered is-striped is-narrow is-hoverable">
+                                 <thead>
+                                     <tr class="has-text-centered">
+                                         <th>#</th>
+                                         <th>Nombre</th>
+                                         <th>Codigo</th>
+                                         <th>Peso</th>
+                                         <th>Precio unitario</th>
+                                         <th>Cantidad vendida</th>
+                                         <th>Subtotal</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                         ';
+                     
+                         
+                             $contador=1;
+                             
+                             foreach($data as $rows){
+                                 $tabla.='
+                                     <tr class="has-text-centered" >
+                                         <td>'.$contador.'</td>
+                                         <td>'.$rows['producto_nombre'].'</td>
+                                         <td>'.$rows['producto_codigo'].'</td>
+                                         <td>'.$rows['producto_peso'].'</td>
+                                         <td>'.$rows['producto_precio'].'</td>
+                                         <td>'.$rows['pv_stock'].'</td>
+                                         <td>'.$rows['pv_total'].'</td> 
+                                     </tr>
+                                 ';
+                                 $contador++;
+                             }
+                             
+                     
+                
+                         $tabla.='</tbody></table>
+                         
+                         
             
-            ';
+                         </div>';
+                     
+                         
+                     
+                         $conexion=null;
+                         echo $tabla;
+                
+                        echo '
+                            <div class="column mr-6">
+                            
+                            <p class="has-text-right is-size-5 pr-6"><strong>Importe total:</strong>  '.$infoVenta['venta_total'].'<br></p> 
+                             
+                             <p class="has-text-right is-size-5 pr-6"><strong>Nro. de productos:</strong>  '.$infoVenta['venta_stock'].'</p>
+                        
+	                        </div>';
 
-        ?>
-    </div> 
-
-		  	
-	<div class="columns">
-        <p class="text is-size-5"><strong>Telefono:</strong>  <?php echo $infoVenta['cliente_telefono']; ?></p>
-	</div>
-    <div class="columns">
-        <p class="text is-size-5"><strong>Correo electronico:</strong>   <?php echo $infoVenta['cliente_email']; ?></p>
-	</div>
-	<div class="columns">
-        <p class="text is-size-5"><strong>Direccion:</strong>  <?php echo $infoVenta['cliente_direccion']; ?> </p>
-	</div>
-   
-   
-   
-	
-
-</body>
+                        ?>
+                </div> 
+            </div> 
+        </div>	
+    </body>
 </html>
 
 <?php 
@@ -116,12 +183,12 @@ $name="Factura_Nro.".$infoVenta['venta_factura'].".pdf";
 
 $options = $dompdf->getOptions();
 $options->set(array('isRemoteEnabled' => true));
+$dompdf->set_option('dpi', 100);
 $dompdf->setOptions($options);
 
 $dompdf -> loadHTML($html);
-$dompdf -> set_paper("A4", "landscape");
-$dompdf ->setPaper('letter');
+$dompdf -> set_paper("letter", "portrait");
 $dompdf -> render();
-$dompdf -> stream($name, array("Attachment" => false)); 
+$dompdf -> stream($name, array("Attachment" => true)); 
 ?>
 
