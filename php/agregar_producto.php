@@ -23,26 +23,7 @@ require_once "../php/main.php";
 		    	</div>
 		    </div>
 
-		    <div class="column">
-		    	<div class="control">
-		    		<label>Peso</label>
-		    		<input class="input" type="text" name="peso_p" id="peso_p" value="'.$row['producto_peso'].'" readonly>
-		    	</div>
-		    </div>
-
-		    	<div class="column">
-		    	<div class="control">
-		    		  <label>Volumen</label>
-		    		  <input class="input" type="text" name="volumen_p" id="volumen_p" value="'.$row['producto_volumen'].'" readonly>
-		    	</div>
-		     </div>
-
-		    <div class="column">
-		    	<div class="control">
-		    		  <label>Fecha de caducidad</label>
-		    		  <input class="input" type="text" name="fecha_p" id="fecha_p" value="'.$row['producto_fecha'].'" readonly>
-		    	</div>
-		    </div>
+		   
 		    <div class="column">
 		    	<div class="control">
 		    		<label>Precio</label>
@@ -67,12 +48,24 @@ require_once "../php/main.php";
 		}else{
 
 			echo'
-	      	<div class="column">
-	      		<div class="control">
-	      			<labe>Margen de ganancias</label>
-	      			  <input class="input" type="number" name="utilidades" id="utilidades" min="1" max="100" required>
-	      		</div>
-	      	</div>
+			<div class="column">
+			<labe>Margen de ganancias</label>
+			<div class="field has-addons">
+			  
+				<p class="control">
+				
+			  <input class="input" type="number" name="utilidades" id="utilidades" min="1" max="100" required>
+				 </p>
+				  <p class="control">
+					<a class="button is-static">
+					  %
+					</a>
+				  </p>
+				
+	
+		</div>
+	</div>
+	
 			<div class="column">
 		    	    <div class="control">
 		    		    <labe>Cantidad requerida</label>

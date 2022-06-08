@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2022 a las 06:04:07
+-- Tiempo de generación: 08-06-2022 a las 07:50:32
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -40,8 +40,7 @@ CREATE TABLE `categoria` (
 INSERT INTO `categoria` (`categoria_id`, `categoria_nombre`, `categoria_ubicacion`) VALUES
 (1, 'bebidas', ''),
 (2, 'no pedecedero', ''),
-(5, 'frutas', ''),
-(6, 'vegetales', '');
+(5, 'frutas', '');
 
 -- --------------------------------------------------------
 
@@ -67,8 +66,8 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`cliente_id`, `cliente_td`, `cliente_documento`, `cliente_nombre`, `cliente_apellido`, `cliente_telefono`, `cliente_email`, `cliente_direccion`, `cliente_ciudad`) VALUES
 (4, 'CC', '123456789', 'cliente', 'de prueba', '4543634634', 'afaf@fsd.com', 'asserr cll 23 #d43-45', 'Barranquilla'),
-(5, 'CC', '1007973563', 'Cristian David', 'Palacio Morelos', '3105437197', 'palaciomorelos12@gmail.com', 'zaragocilla calle 27 #53-55', 'cartagena'),
-(6, 'CC', '325423523', 'Gustavo', 'Petro  Urrego', '4567859680', 'petro@gmail.com', 'Calle 42 # 15-34', 'Bogota');
+(6, 'DE', '325423523', 'Gustavo', 'Petro  Urrego', '4567859680', 'petro@gmail.com', 'Calle 42 # 15-34', 'Bogota'),
+(7, 'CC', '35353434243', 'Bruno', 'Diaz', '3456756789', 'bat@man.com', 'los angeles calle 61', 'gothan');
 
 -- --------------------------------------------------------
 
@@ -99,8 +98,9 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`producto_id`, `producto_codigo`, `producto_nombre`, `producto_peso`, `producto_pmedida`, `producto_volumen`, `producto_vmedida`, `producto_fecha`, `producto_precio`, `producto_stock`, `producto_foto`, `categoria_id`, `usuario_id`, `proveedor_id`, `producto_ingreso`) VALUES
-(22, '214234', 'Arroz Diana', '500.00', 'g', '0.00', 'Lt', '0000-00-00', '2000.00', 35, 'Arroz_Diana_14.jpg', 2, 1, 1, '2022-06-07 22:23:21'),
-(23, '124243', 'Leche colanta', '0.00', 'Kg', '950.00', 'ml', '2022-06-24', '3700.00', 45, 'Leche_colanta_12.jpg', 1, 1, 1, '2022-06-07 22:40:49');
+(22, '214234', 'Arroz Diana', '500.00', 'g', '0.00', 'Lt', '0000-00-00', '2000.00', 23, 'Arroz_Diana_14.jpg', 2, 1, 1, '2022-06-07 22:23:21'),
+(23, '124243', 'Leche colanta', '0.00', 'Kg', '950.00', 'ml', '2022-06-24', '3700.00', 39, 'Leche_colanta_12.jpg', 1, 1, 1, '2022-06-07 22:40:49'),
+(24, '335345', 'pan bimbo', '250.00', 'g', '0.00', 'Lt', '0000-00-00', '3200.00', 45, 'pan_bimbo_77.jpg', 2, 1, 2, '2022-06-08 00:36:14');
 
 -- --------------------------------------------------------
 
@@ -123,7 +123,9 @@ CREATE TABLE `producto_vendido` (
 --
 
 INSERT INTO `producto_vendido` (`pv_id`, `venta_codigo`, `producto_id`, `pv_stock`, `precio_unitario`, `pv_total`, `pv_utilidad`) VALUES
-(326, '1000000001', 22, 15, '2272.00', 34080, '12.00');
+(326, '1000000001', 22, 15, '2272.00', 34080, '12.00'),
+(327, '1000000002', 22, 12, '2222.00', 26664, '10.00'),
+(328, '1000000002', 23, 6, '3894.00', 23364, '5.00');
 
 -- --------------------------------------------------------
 
@@ -148,7 +150,8 @@ CREATE TABLE `proveedor` (
 
 INSERT INTO `proveedor` (`proveedor_id`, `proveedor_td`, `proveedor_documento`, `proveedor_nombre`, `proveedor_telefono`, `proveedor_email`, `proveedor_direccion`, `proveedor_ciudad`) VALUES
 (1, 'CC', '342141244123', 'Proveedor de prueba', '1234567890', 'safdasfd@erewr.com', 'fasffdfads adfafasfas', 'sdggsdagadsg'),
-(2, 'DE', '464664565', 'fulanito de tal', '6754575034', 'empresa@alazar.com', 'afasfsaffa', 'medellin');
+(2, 'DE', '464664565', 'fulanito de tal', '6754575034', 'empresa@alazar.com', 'afasfsaffa', 'medellin'),
+(4, 'NIT', '234324324', 'nestle', '2345678906', 'asas@safsdaf.com', 'dwerweewg', 'bogota');
 
 -- --------------------------------------------------------
 
@@ -170,7 +173,8 @@ CREATE TABLE `reportes` (
 
 INSERT INTO `reportes` (`fecha_ingreso`, `fecha _salida`, `cantidad_ingresada`, `cantidad_retirada`, `producto_id`) VALUES
 ('2022-06-07 22:23:21', '0000-00-00 00:00:00', 50, 0, 22),
-('2022-06-07 22:40:49', '0000-00-00 00:00:00', 45, 0, 23);
+('2022-06-07 22:40:49', '0000-00-00 00:00:00', 45, 0, 23),
+('2022-06-08 00:36:14', '0000-00-00 00:00:00', 45, 0, 24);
 
 -- --------------------------------------------------------
 
@@ -218,7 +222,8 @@ CREATE TABLE `venta` (
 --
 
 INSERT INTO `venta` (`venta_id`, `venta_codigo`, `venta_fecha`, `venta_stock`, `venta_total`, `cliente_id`, `usuario_id`, `venta_factura`) VALUES
-(1, '1000000001', '2022-06-07', '15', 34080, 4, 1, 1);
+(1, '1000000001', '2022-06-07', '15', 34080, 4, 1, 1),
+(2, '1000000002', '2022-06-08', '18', 50028, 7, 1, 2);
 
 --
 -- Índices para tablas volcadas
@@ -296,37 +301,37 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `cliente_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cliente_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `producto_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `producto_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_vendido`
 --
 ALTER TABLE `producto_vendido`
-  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
+  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-  MODIFY `proveedor_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `proveedor_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `usuario_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `usuario_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `venta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `venta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas

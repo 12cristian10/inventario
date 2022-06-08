@@ -1,3 +1,18 @@
+<?php
+ require_once dirname(__DIR__)."/php/main.php";
+ob_start();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUFF KEY</title>
+    <link rel="stylesheet" href="http://localhost/inventario/css/bulma.min.css">
+    <link rel="stylesheet" href="http://localhost/inventario/css/estilos.css">
+</head>
+<body>
 <div class="container is-fluid mb-6">
 	<h1 class="title">Reportes</h1>
 	<h2 class="subtitle">Inventario</h2>
@@ -5,8 +20,8 @@
 
 <div class="container pb-6 pt-6">
     <?php
-    	require_once "./php/main.php";
-        require_once "./php/reporte_inventario.php";
+    	
+        require_once dirname(__DIR__)."/php/reporte_inventario.php";
         date_default_timezone_set("America/Bogota");
         $fecha=date("d-m-Y");
 
@@ -143,14 +158,31 @@
         </div>
     </div>
     
-    <div class="container pb-5 pt-5">
-<div class="field is-grouped">
-        <p class="control"><a href="index.php?vista=home" class="button is-primary is-rounded">Regresar al menu</a></p>
-        <p class="control"> <a href="./php/reporte_pdf.php" class="button is-link is-rounded">Guardar como PDF</a></p>
-        <p class="control"><button id="imprimirReporte" class="button is-info is-rounded">Imprimir</button></p>
-    </div>
-</div>
 
    
 </div>
+</body>
+</html>
 
+<?php 
+
+
+$html=ob_get_clean();
+
+
+require_once dirname(__DIR__).'/inc/lib/dompdf/autoload.inc.php';
+use Dompdf\Dompdf;
+$dompdf = new Dompdf();
+
+$name="Reporte_".$fecha.".pdf";
+
+$options = $dompdf->getOptions();
+$options->set(array('isRemoteEnabled' => true));
+$dompdf->set_option('dpi', 120);
+$dompdf->setOptions($options);
+
+$dompdf -> loadHTML($html);
+$dompdf -> set_paper("letter", "portrait");
+$dompdf -> render();
+$dompdf -> stream($name, array("Attachment" => true)); 
+?>

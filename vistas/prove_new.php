@@ -10,14 +10,11 @@
 		<div class="columns">
             <div class="column">
 		    	<div class="control">
-					<label>Tipo de documento</label><br>
+					<label>RUT</label><br>
 		    	    <div class="select">
 				  	    <select name="proveedor_td" required>
 				        	<option value="" selected disabled>Seleccione una opción</option>
                             <option value="CC" >Cedula de ciudadania</option>
-                            <option value="CE" >Cedula de extrangeria</option>
-                            <option value="DE" >Documento extranjero</option>
-                            <option value="PAS" >Pasaporte</option>
                             <option value="NIT" >NIT</option>
 				  	    </select>
 				    </div>
@@ -33,7 +30,7 @@
         <div class="columns">
 		  	<div class="column">
 		    	<div class="control">
-					<label>Nombres</label>
+					<label>Nombre de la empresa</label>
 				  	<input class="input" type="text" name="proveedor_nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,50}" maxlength="50" required >
 				</div>
 		  	</div>

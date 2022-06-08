@@ -88,6 +88,7 @@ $celdas="venta.venta_id,venta.venta_codigo,venta.venta_fecha,venta.venta_stock,v
         <p class="control"><button id="imprimirFactura" class="button is-info is-rounded">Imprimir</button></p>
     </div>
 </div>
+
 </div>
 
 

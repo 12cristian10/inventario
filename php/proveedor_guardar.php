@@ -108,7 +108,7 @@
         echo '
             <div class="notification is-info is-light">
                 <strong>¡proveedor REGISTRADO!</strong><br>
-                El proveedor se registro con exito
+                El PROVEEDOR se registro con exito
             </div>
         ';
     }else{

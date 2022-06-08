@@ -1,5 +1,5 @@
 <?php
-require_once "./php/main.php";
+ require_once dirname(__DIR__)."/php/main.php";
 
     $num_categorias=conexion();
     $num_categorias=$num_categorias->query("SELECT COUNT(categoria_id) AS categorias FROM categoria");

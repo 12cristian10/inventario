@@ -3,7 +3,7 @@
 	$tabla="";
 
 	if(isset($busqueda) && $busqueda!=""){
-		$consulta="SELECT SQL_CALC_FOUND_ROWS * FROM cliente WHERE cliente_nombre LIKE '%$busqueda%' OR cliente_apellido LIKE '%$busqueda%' OR cliente_documento LIKE '%$busqueda%' OR cliente_td LIKE '%$busqueda%' ORDER BY usuario_nombre ASC LIMIT $inicio,$registros";
+		$consulta="SELECT SQL_CALC_FOUND_ROWS * FROM cliente WHERE cliente_nombre LIKE '%$busqueda%' OR cliente_apellido LIKE '%$busqueda%' OR cliente_documento LIKE '%$busqueda%' OR cliente_td LIKE '%$busqueda%' ORDER BY cliente_nombre ASC LIMIT $inicio,$registros";
 	}else{
 		$consulta="SELECT SQL_CALC_FOUND_ROWS * FROM cliente ORDER BY cliente_nombre ASC LIMIT $inicio,$registros";
 	}

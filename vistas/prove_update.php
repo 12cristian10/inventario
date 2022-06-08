@@ -34,45 +34,13 @@
                                     case"CC":
                                     echo'<option value="" disabled>Seleccione una opción</option>
                                         <option value="CC" selected>Cedula de ciudadania</option>
-                                        <option value="CE" >Cedula de extrangeria</option>
-                                        <option value="DE" >Documento extranjero</option>
-                                        <option value="PAS" >Pasaporte</option>
                                         <option value="NIT" >NIT</option>';
                                         
                                     break;
-                                    case"CE":
-                                        echo'<option value="" disabled>Seleccione una opción</option>
-                                            <option value="CC">Cedula de ciudadania</option>
-                                            <option value="CE" selected>Cedula de extrangeria</option>
-                                            <option value="DE" >Documento extranjero</option>
-                                            <option value="PAS" >Pasaporte</option>
-                                            <option value="NIT" >NIT</option>';
-                                            
-                                    break;
-                                    case"DE":
-                                        echo'<option value="" disabled>Seleccione una opción</option>
-                                            <option value="CC">Cedula de ciudadania</option>
-                                            <option value="CE" >Cedula de extrangeria</option>
-                                            <option value="DE" selected>Documento extranjero</option>
-                                            <option value="PAS" >Pasaporte</option>
-                                            <option value="NIT" >NIT</option>';
-                                            
-                                    break;
-                                    case"PAS":
-                                        echo'<option value="" disabled>Seleccione una opción</option>
-                                            <option value="CC">Cedula de ciudadania</option>
-                                            <option value="CE" >Cedula de extrangeria</option>
-                                            <option value="DE" >Documento extranjero</option>
-                                            <option value="PAS" selected>Pasaporte</option>
-                                            <option value="NIT" >NIT</option>';
-                                            
-                                    break;
+                                    
                                     case"NIT":
                                         echo'<option value="" disabled>Seleccione una opción</option>
                                             <option value="CC">Cedula de ciudadania</option>
-                                            <option value="CE" >Cedula de extrangeria</option>
-                                            <option value="DE" >Documento extranjero</option>
-                                            <option value="PAS" >Pasaporte</option>
                                             <option value="NIT" selected>NIT</option>';
                                             
                                     break;
