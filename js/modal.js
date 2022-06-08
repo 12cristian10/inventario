@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if(!($('#select_product').val() == null || $('#unidades_p').val()<=0 || $('#unidades_p').val() > parseInt($('#stock_p').val(),10) || $('#utilidades').val()=="" || parseInt($('#utilidades').val(),10)>100 || parseInt($('#utilidades').val(),10)<=0)){
       closeModal($target);
+      window.location.reload();
     }
    
 
