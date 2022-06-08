@@ -1,7 +1,7 @@
-<div class="main-container">
-
+<div class="main-container is-fullwidth">
+          
 	<form class="box login" action="" method="POST" autocomplete="off">
-		<h5 class="title is-5 has-text-centered is-uppercase">BUFF KEY</h5>
+	<img src="./img/buff_logo.png">	<br>
 
 		<div class="field">
 			<label class="label">Usuario</label>
