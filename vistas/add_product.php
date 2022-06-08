@@ -46,10 +46,23 @@
         					  <input class="input" type="text" name="codigo_p" id="codigo_p" readonly>
         				</div>
         			</div>
+
         			<div class="column">
         				<div class="control">
 						      <label>Peso</label>
         					  <input class="input" type="text" name="peso_p" id="peso_p" readonly>
+        				</div>
+        			</div>
+					<div class="column">
+        				<div class="control">
+						      <label>Volumen</label>
+        					  <input class="input" type="text" name="volumen_p" id="volumen_p" readonly>
+        				</div>
+        			</div>
+					<div class="column">
+        				<div class="control">
+						      <label>Fecha de caducidad</label>
+        					  <input class="input" type="text" name="fecha_p" id="fecha_p" readonly>
         				</div>
         			</div>
         			<div class="column">
@@ -64,6 +77,14 @@
         					  <input class="input" type="text" name="stock_p" id="stock_p" readonly>
         				</div>
         			</div>
+
+					<div class="column">
+        				<div class="control">
+        					<labe>Margen de ganancias</label>
+        					  <input class="input" type="number" name="utilidades" id="utilidades" min="1" max="100" required>
+        				</div>
+        			</div>
+
         			<div class="column">
         				<div class="control">
         					<labe>Cantidad requerida</label>

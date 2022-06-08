@@ -6,10 +6,11 @@ require_once "../php/main.php";
 $codigo=$_SESSION['venta_codigo'];
 $producto_id=$_POST['producto'];
 $cantidad=limpiar_cadena($_POST['unidades_p']);
+$utilidades=limpiar_cadena($_POST['utilidades']);
 $total=0;
 
 /*== Verificando campos obligatorios ==*/
-if($cantidad=="" || $producto_id=="null"){
+if($cantidad=="" || $producto_id=="null" || $utilidades=="" ){
     
 	echo '
 		<div class="notification is-danger is-light">
@@ -27,6 +28,28 @@ if((int) $cantidad <=0){
 		<div class="notification is-danger is-light">
 			<strong>¡Ocurrio un error inesperado!</strong><br>
 			La CANTIDAD REQUERIDA debe ser un valor mayor a 0
+		</div>
+	';
+	exit();
+}
+
+if((int) $utilidades<=0){
+    
+	echo '
+		<div class="notification is-danger is-light">
+			<strong>¡Ocurrio un error inesperado!</strong><br>
+			El Margen de ganancia debe ser un valor mayor a 0
+		</div>
+	';
+	exit();
+}
+
+if((int) $utilidades>100){
+    
+	echo '
+		<div class="notification is-danger is-light">
+			<strong>¡Ocurrio un error inesperado!</strong><br>
+			El Margen de ganancia no debe superar el 100%
 		</div>
 	';
 	exit();
@@ -51,8 +74,8 @@ if((int) $cantidad <=0){
 	        ';
 	        exit();
 	   }else{
-           $precio=$resultado['producto_precio'];
-           $subtotal=$cantidad*$precio;
+           $precio_venta=(int)($resultado['producto_precio']/(1-((double)$utilidades/100)));
+           $subtotal=$cantidad*$precio_venta;
         
        }
    	  
@@ -61,13 +84,15 @@ if((int) $cantidad <=0){
 
    	/*== Guardando datos ==*/
        $guardar_p_sale=conexion();
-       $guardar_p_sale=$guardar_p_sale->prepare("INSERT INTO producto_vendido(venta_codigo,producto_id,pv_stock,pv_total) VALUES(:codigo,:id,:cantidad,:sub)");
+       $guardar_p_sale=$guardar_p_sale->prepare("INSERT INTO producto_vendido(venta_codigo,producto_id,pv_stock,precio_unitario,pv_total,pv_utilidad) VALUES(:codigo,:id,:cantidad,:precio,:sub,:utilidad)");
    
        $marcadores=[
            ":codigo"=>$codigo,
            ":id"=>$producto_id,
            ":cantidad"=>$cantidad,
-           ":sub"=>$subtotal
+           ":precio"=>$precio_venta,
+           ":sub"=>$subtotal,
+           ":utilidad"=>$utilidades
        ];
    
        $guardar_p_sale->execute($marcadores);

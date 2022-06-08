@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeModal($el) {
       $el.classList.remove('is-active');
     }
+
+    function closeModal($el) {
+      $el.classList.remove('is-active');
+    }
   
     function closeAllModals() {
       (document.querySelectorAll('.modal') || []).forEach(($modal) => {
@@ -25,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
    
-
 
   // Add a click event on various child elements to close the parent modal
   (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete') || []).forEach(($close) => {
@@ -50,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     $close.addEventListener('click', () => { 
 
-  if(!($('#select_product').val() == null || $('#unidades_p').val()<=0 || $('#unidades_p').val() > parseInt($('#stock_p').val(),10))){
+  if(!($('#select_product').val() == null || $('#unidades_p').val()<=0 || $('#unidades_p').val() > parseInt($('#stock_p').val(),10) || $('#utilidades').val()=="" || parseInt($('#utilidades').val(),10)>100 || parseInt($('#utilidades').val(),10)<=0)){
       closeModal($target);
     }
    

@@ -82,7 +82,6 @@
                 <div class="navbar-dropdown">
                     <a href="index.php?vista=inventory_report" class="navbar-item">Inventario</a>
                     <a href="index.php?vista=sale_report" class="navbar-item">Ventas</a>
-                    <a href="index.php?vista=purchase_report" class="navbar-item">Compras</a>
                 </div>
             </div>
 

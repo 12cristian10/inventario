@@ -3,7 +3,9 @@ $(document).ready(function(){
 
         var producto= $('#select_product').val();
         var unidades_p=$('#unidades_p').val();
-        var datos= 'producto=' + producto + '&unidades_p=' +unidades_p;
+        var utilidades=$('#utilidades').val();
+        console.log(utilidades);
+        var datos= 'producto=' + producto + '&unidades_p=' + unidades_p + '&utilidades=' + utilidades;
         
     
         $.ajax({
@@ -14,7 +16,7 @@ $(document).ready(function(){
                 $("#respuesta").html(resp);
                 $("#tabla").load("./vistas/pv_list.php");
                 
-                
+    
             }
         });
        
