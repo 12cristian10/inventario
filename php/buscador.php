@@ -38,8 +38,10 @@
 			
 			 <?php }else{
 			    	$_SESSION[$modulo_buscador]=$txt;
-					
-			    	//header("Location: index.php?vista=$mod_url",false,302); 
+					echo'<script type="text/javascript">
+					window.location.replace("http://localhost/inventario/index.php?vista='.$mod_url.'");
+					</script>';
+			  
  					exit();  
 			    }
 			}
@@ -48,7 +50,11 @@
         		# Eliminar busqueda #
 		if(isset($_POST['eliminar_buscador'])){
 			unset($_SESSION[$modulo_buscador]);
-			     
+
+			echo'<script type="text/javascript">
+			           window.location.replace("http://localhost/inventario/index.php?vista='.$mod_url.'");
+					</script>';
+			  
  			exit();
 		}
 	}else{ ?>
