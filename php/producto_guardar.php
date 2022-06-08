@@ -239,6 +239,30 @@
                 El producto se registro con exito
             </div>
         ';
+
+        $recolectar_datos=conexion();
+        $recolectar_datos=$recolectar_datos->query("SELECT * FROM producto WHERE producto_codigo='$codigo'");
+        if($recolectar_datos->rowCount()>0){
+        
+            $data=$recolectar_datos->fetch();
+           $id=$data['producto_id'];
+           $fecha_ingreso=$data['producto_ingreso'];
+           $cantidad=$data['producto_stock']; 
+
+           $guardar_reporte=conexion();
+           $guardar_reporte=$guardar_reporte->prepare("INSERT INTO reportes(fecha_ingreso,cantidad_ingresada,producto_id) VALUES(:ingreso,:unidadesi,:id)");
+
+           $info=[
+            ":id"=>$id,
+            ":ingreso"=>$fecha_ingreso,
+            ":unidadesi"=>$cantidad     
+        ];
+           
+           $guardar_reporte->execute($info);
+           $guardar_reporte=null;
+        }
+        $recolectar_datos=null;
+        
     }else{
 
     	if(is_file($img_dir.$foto)){

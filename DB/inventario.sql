@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2022 a las 02:07:06
+-- Tiempo de generación: 08-06-2022 a las 06:04:07
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -90,18 +90,17 @@ CREATE TABLE `producto` (
   `producto_foto` varchar(500) COLLATE utf8_spanish2_ci NOT NULL,
   `categoria_id` int(7) NOT NULL,
   `usuario_id` int(10) NOT NULL,
-  `proveedor_id` int(10) NOT NULL
+  `proveedor_id` int(10) NOT NULL,
+  `producto_ingreso` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`producto_id`, `producto_codigo`, `producto_nombre`, `producto_peso`, `producto_pmedida`, `producto_volumen`, `producto_vmedida`, `producto_fecha`, `producto_precio`, `producto_stock`, `producto_foto`, `categoria_id`, `usuario_id`, `proveedor_id`) VALUES
-(9, '5345377', 'Leche colanta', '0.00', 'g', '950.00', 'ml', '2022-10-20', '3700.00', 35, 'Leche_colanta_66.jpg', 1, 1, 2),
-(10, '432532523', 'Arroz diana', '500.00', 'g', '0.00', 'Lt', '0000-00-00', '2000.00', 146, 'Arroz_diana_31.jpg', 2, 1, 1),
-(11, '55222344', 'Pan Bimbo', '350.00', 'g', '0.00', 'Lt', '0000-00-00', '3200.00', 56, 'Pan_Bimbo_60.jpg', 2, 1, 1),
-(12, '674745', 'Sal Refisal', '300.00', 'g', '0.00', 'Lt', '0000-00-00', '1700.00', 59, 'Sal_Refisal_57.jpg', 2, 1, 2);
+INSERT INTO `producto` (`producto_id`, `producto_codigo`, `producto_nombre`, `producto_peso`, `producto_pmedida`, `producto_volumen`, `producto_vmedida`, `producto_fecha`, `producto_precio`, `producto_stock`, `producto_foto`, `categoria_id`, `usuario_id`, `proveedor_id`, `producto_ingreso`) VALUES
+(22, '214234', 'Arroz Diana', '500.00', 'g', '0.00', 'Lt', '0000-00-00', '2000.00', 35, 'Arroz_Diana_14.jpg', 2, 1, 1, '2022-06-07 22:23:21'),
+(23, '124243', 'Leche colanta', '0.00', 'Kg', '950.00', 'ml', '2022-06-24', '3700.00', 45, 'Leche_colanta_12.jpg', 1, 1, 1, '2022-06-07 22:40:49');
 
 -- --------------------------------------------------------
 
@@ -124,8 +123,7 @@ CREATE TABLE `producto_vendido` (
 --
 
 INSERT INTO `producto_vendido` (`pv_id`, `venta_codigo`, `producto_id`, `pv_stock`, `precio_unitario`, `pv_total`, `pv_utilidad`) VALUES
-(322, '1000000001', 9, 7, '4111.11', 28778, '10.00'),
-(323, '1000000001', 10, 4, '2352.00', 9408, '15.00');
+(326, '1000000001', 22, 15, '2272.00', 34080, '12.00');
 
 -- --------------------------------------------------------
 
@@ -151,6 +149,28 @@ CREATE TABLE `proveedor` (
 INSERT INTO `proveedor` (`proveedor_id`, `proveedor_td`, `proveedor_documento`, `proveedor_nombre`, `proveedor_telefono`, `proveedor_email`, `proveedor_direccion`, `proveedor_ciudad`) VALUES
 (1, 'CC', '342141244123', 'Proveedor de prueba', '1234567890', 'safdasfd@erewr.com', 'fasffdfads adfafasfas', 'sdggsdagadsg'),
 (2, 'DE', '464664565', 'fulanito de tal', '6754575034', 'empresa@alazar.com', 'afasfsaffa', 'medellin');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reportes`
+--
+
+CREATE TABLE `reportes` (
+  `fecha_ingreso` datetime NOT NULL,
+  `fecha _salida` datetime NOT NULL,
+  `cantidad_ingresada` int(11) NOT NULL,
+  `cantidad_retirada` int(11) NOT NULL,
+  `producto_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `reportes`
+--
+
+INSERT INTO `reportes` (`fecha_ingreso`, `fecha _salida`, `cantidad_ingresada`, `cantidad_retirada`, `producto_id`) VALUES
+('2022-06-07 22:23:21', '0000-00-00 00:00:00', 50, 0, 22),
+('2022-06-07 22:40:49', '0000-00-00 00:00:00', 45, 0, 23);
 
 -- --------------------------------------------------------
 
@@ -198,7 +218,7 @@ CREATE TABLE `venta` (
 --
 
 INSERT INTO `venta` (`venta_id`, `venta_codigo`, `venta_fecha`, `venta_stock`, `venta_total`, `cliente_id`, `usuario_id`, `venta_factura`) VALUES
-(1, '1000000001', '2022-06-07', '11', 38186, 6, 1, 1);
+(1, '1000000001', '2022-06-07', '15', 34080, 4, 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -240,6 +260,12 @@ ALTER TABLE `proveedor`
   ADD PRIMARY KEY (`proveedor_id`);
 
 --
+-- Indices de la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  ADD KEY `producto_id` (`producto_id`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -264,7 +290,7 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `categoria_id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `categoria_id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -276,13 +302,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `producto_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `producto_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_vendido`
 --
 ALTER TABLE `producto_vendido`
-  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
+  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=327;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -318,6 +344,12 @@ ALTER TABLE `producto`
 --
 ALTER TABLE `producto_vendido`
   ADD CONSTRAINT `producto_vendido_ibfk_3` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`producto_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  ADD CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`producto_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `venta`
