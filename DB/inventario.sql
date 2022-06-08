@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2022 a las 23:58:59
+-- Tiempo de generación: 08-06-2022 a las 02:07:06
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -39,7 +39,9 @@ CREATE TABLE `categoria` (
 
 INSERT INTO `categoria` (`categoria_id`, `categoria_nombre`, `categoria_ubicacion`) VALUES
 (1, 'bebidas', ''),
-(2, 'no pedecedero', '');
+(2, 'no pedecedero', ''),
+(5, 'frutas', ''),
+(6, 'vegetales', '');
 
 -- --------------------------------------------------------
 
@@ -65,7 +67,8 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`cliente_id`, `cliente_td`, `cliente_documento`, `cliente_nombre`, `cliente_apellido`, `cliente_telefono`, `cliente_email`, `cliente_direccion`, `cliente_ciudad`) VALUES
 (4, 'CC', '123456789', 'cliente', 'de prueba', '4543634634', 'afaf@fsd.com', 'asserr cll 23 #d43-45', 'Barranquilla'),
-(5, 'CC', '1007973563', 'Cristian David', 'Palacio Morelos', '3105437197', 'palaciomorelos12@gmail.com', 'zaragocilla calle 27 #53-55', 'cartagena');
+(5, 'CC', '1007973563', 'Cristian David', 'Palacio Morelos', '3105437197', 'palaciomorelos12@gmail.com', 'zaragocilla calle 27 #53-55', 'cartagena'),
+(6, 'CC', '325423523', 'Gustavo', 'Petro  Urrego', '4567859680', 'petro@gmail.com', 'Calle 42 # 15-34', 'Bogota');
 
 -- --------------------------------------------------------
 
@@ -95,7 +98,10 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`producto_id`, `producto_codigo`, `producto_nombre`, `producto_peso`, `producto_pmedida`, `producto_volumen`, `producto_vmedida`, `producto_fecha`, `producto_precio`, `producto_stock`, `producto_foto`, `categoria_id`, `usuario_id`, `proveedor_id`) VALUES
-(9, '5345377', 'Leche colanta', '0.00', 'g', '950.00', 'ml', '2022-10-20', '3700.00', 100, 'Leche_colanta_66.jpg', 1, 1, 2);
+(9, '5345377', 'Leche colanta', '0.00', 'g', '950.00', 'ml', '2022-10-20', '3700.00', 35, 'Leche_colanta_66.jpg', 1, 1, 2),
+(10, '432532523', 'Arroz diana', '500.00', 'g', '0.00', 'Lt', '0000-00-00', '2000.00', 146, 'Arroz_diana_31.jpg', 2, 1, 1),
+(11, '55222344', 'Pan Bimbo', '350.00', 'g', '0.00', 'Lt', '0000-00-00', '3200.00', 56, 'Pan_Bimbo_60.jpg', 2, 1, 1),
+(12, '674745', 'Sal Refisal', '300.00', 'g', '0.00', 'Lt', '0000-00-00', '1700.00', 59, 'Sal_Refisal_57.jpg', 2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -108,8 +114,18 @@ CREATE TABLE `producto_vendido` (
   `venta_codigo` varchar(10) NOT NULL,
   `producto_id` int(20) NOT NULL,
   `pv_stock` int(25) NOT NULL,
-  `pv_total` int(50) NOT NULL
+  `precio_unitario` decimal(10,2) NOT NULL,
+  `pv_total` int(50) NOT NULL,
+  `pv_utilidad` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `producto_vendido`
+--
+
+INSERT INTO `producto_vendido` (`pv_id`, `venta_codigo`, `producto_id`, `pv_stock`, `precio_unitario`, `pv_total`, `pv_utilidad`) VALUES
+(322, '1000000001', 9, 7, '4111.11', 28778, '10.00'),
+(323, '1000000001', 10, 4, '2352.00', 9408, '15.00');
 
 -- --------------------------------------------------------
 
@@ -178,6 +194,13 @@ CREATE TABLE `venta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Volcado de datos para la tabla `venta`
+--
+
+INSERT INTO `venta` (`venta_id`, `venta_codigo`, `venta_fecha`, `venta_stock`, `venta_total`, `cliente_id`, `usuario_id`, `venta_factura`) VALUES
+(1, '1000000001', '2022-06-07', '11', 38186, 6, 1, 1);
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -241,25 +264,25 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `categoria_id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `categoria_id` int(7) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `cliente_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cliente_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `producto_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `producto_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `producto_vendido`
 --
 ALTER TABLE `producto_vendido`
-  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=315;
+  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -277,7 +300,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `venta_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `venta_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
