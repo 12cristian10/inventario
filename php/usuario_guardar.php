@@ -26,7 +26,7 @@
 
 
     /*== Verificando integridad de los datos ==*/
-    if(verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}",$nombre)){
+    if(verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,40}",$nombre)){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -36,7 +36,7 @@
         exit();
     }
 
-    if(verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}",$apellido)){
+    if(verificar_datos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,40}",$apellido)){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -46,7 +46,7 @@
         exit();
     }
 
-    if(verificar_datos("[a-zA-Z0-9]{4,20}",$usuario)){
+    if(verificar_datos("[a-zA-Z0-9]{2,20}",$usuario)){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -56,7 +56,7 @@
         exit();
     }
 
-    if(verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_1) || verificar_datos("[a-zA-Z0-9$@.-]{7,100}",$clave_2)){
+    if(verificar_datos("[a-zA-Z0-9$@.-]{2,100}",$clave_1) || verificar_datos("[a-zA-Z0-9$@.-]{2,100}",$clave_2)){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>

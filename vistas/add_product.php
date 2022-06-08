@@ -1,111 +1,107 @@
-<?php
-$productos=conexion();
-$productos=$productos->query("SELECT * FROM producto");
 
-if($productos->rowCount()>0){
-?>
-<div class="container pt-4">
-<h2 class="subtitle">Agregar productos a la venta:</h2>
+<!-- modal para agregar productos -->
 
-    <div class="form-rest mb-4 mt-4"></div>
+<div id="addNewProduct" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Agregar nuevo producto</p>
+      <button class="delete" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body">
+	<div id="respuesta" class="form-rest mb-4 mt-4"></div>
 
-	<form action="./php/pv_guardar.php" method="POST" class="FormularioAjax" autocomplete="off">
-
-			
-	    <div class="columns">
-			
-			<div class="colums">
-				<div class="column">
-				    <label>Nombre</label>
-		    	    <div class="select">
-				      	<select name="producto" id="select_product" required>
-				        	<option value="" selected disabled>Seleccione una opción</option>
-				        	<?php
-				    		   
-    			    			$productos=conexion();
-
-    			    			$productos=$productos->query("SELECT * FROM producto");
-    			    			if($productos->rowCount()>0){
-    			    				$productos=$productos->fetchAll();
-    			    				foreach($productos as $row){
-    			    					echo '<option value="'.$row['producto_id'].'" >'.$row['producto_nombre'].'</option>';
-				        			}
-				       			}
-				       			$productos=null;
-				        	?>
-				      	</select>
-				    </div>
-		       </div>
+        	<div class="column">
+			     <label>Nombre</label>
 			</div>
+		     
+        	<div class="column">
+        		
+        		<div id="selector" class="select">
+        			  <select name="producto" id="select_product" required>
+        				<option value="" selected disabled>Seleccione un producto</option>
+        				<?php
+        				   
+        					$productos=conexion();
 
-            <div class="columns is-vcentered" id="probando">
-			   <div class="column">
-	    	    	<div class="control">
-	    				<label>Codigo</label>
-	    			  	<input class="input" type="text" name="codigo_p" disabled>
-	    			</div>
-	    	  	</div>
-	    	  	<div class="column">
-	    	    	<div class="control">
-	    				<label>Peso</label>
-	    			  	<input class="input" type="text" name="peso_p" disabled>
-	    			</div>
-	    	  	</div>
-	    		<div class="column">
-	    	    	<div class="control">
-	    				<label>Precio</label>
-	    			  	<input class="input" type="text" name="precio_p" disabled>
-	    			</div>
-	    	  	</div>
-	    		  <div class="column">
-	    	    	<div class="control">
-	    				<label>Stock</label>
-	    			  	<input class="input" type="text" name="stock_p" disabled>
-	    			</div>
-	    	  	</div>
-	    		  <div class="column">
-	    	    	<div class="control">
-	    				<labe>Cantidad requerida</label>
-	    			  	<input class="input" type="text" name="unidades_p" pattern="[0-9]{1,25}" maxlength="25"  required>
-	    			</div>
-	    	  	</div>
-				<div class="column pt-5">
-				
-				 <button type="submit" class="button is-info is-rounded">Agregar</button>
-					 
-			    </div>  
-			</div>
-	  
-	    </div>
-            
-	</form>
+        					$productos=$productos->query("SELECT * FROM producto");
+        					if($productos->rowCount()>0){
+        						$productos=$productos->fetchAll();
+        						foreach($productos as $row){
+        							echo '<option value="'.$row['producto_id'].'" >'.$row['producto_nombre'].'</option>';
+        						}
+        					   }
+        					   $productos=null;
+        				?>
+        			  </select>
+        		</div>
+        	 </div>
+        	
+        
+        		<div id="datos_producto">
+        		   	
+        			<div class="column">
+        			    <div class="control">
+        					<label>Codigo</label>
+        					  <input class="input" type="text" name="codigo_p" id="codigo_p" readonly>
+        				</div>
+        			</div>
 
-</div>
-<?php
-}
-else{
-?>
-<div class="container pt-4">
-  
-  <div class="column pb-6 has-text-centered">
-	  <h2 class="subtitle">NO EXISTEN PRODUCTOS REGISTRADOS EN EL SISTEMA</h2>
+        			<div class="column">
+        				<div class="control">
+						      <label>Peso</label>
+        					  <input class="input" type="text" name="peso_p" id="peso_p" readonly>
+        				</div>
+        			</div>
+					<div class="column">
+        				<div class="control">
+						      <label>Volumen</label>
+        					  <input class="input" type="text" name="volumen_p" id="volumen_p" readonly>
+        				</div>
+        			</div>
+					<div class="column">
+        				<div class="control">
+						      <label>Fecha de caducidad</label>
+        					  <input class="input" type="text" name="fecha_p" id="fecha_p" readonly>
+        				</div>
+        			</div>
+        			<div class="column">
+        				<div class="control">
+        					<label>Precio</label>
+        					  <input class="input" type="text" name="precio_p" id="precio_p" readonly>
+        				</div>
+        			</div>
+        			<div class="column">
+        				<div class="control">
+        					<label>Stock</label>
+        					  <input class="input" type="text" name="stock_p" id="stock_p" readonly>
+        				</div>
+        			</div>
+
+					<div class="column">
+        				<div class="control">
+        					<labe>Margen de ganancias</label>
+        					  <input class="input" type="number" name="utilidades" id="utilidades" min="1" max="100" required>
+        				</div>
+        			</div>
+
+        			<div class="column">
+        				<div class="control">
+        					<labe>Cantidad requerida</label>
+        					  <input class="input" type="number" name="unidades_p" id="unidades_p" min="1" required>
+        				</div>
+        			</div>
+        			
+        		</div>
+          
+        	
+        		
+       
+    </section>
+    <footer class="modal-card-foot">
+      <button id="addProduct"class="button is-success" type="button" >Agregar a la venta</button>
+
+	<button id="cancelar" class="button">Cancelar</button>
+    </footer>
   </div>
-
-    <div class="columns">
-				
-		<div class="column">
-		    <a href="index.php?vista=product_new" class="button is-success is-rounded">Agregar producto al sistema</a>
-		</div>
-		<div class="column is-offset-8">
-		    <a href="index.php?vista=home" class="button is-link is-rounded">Regresar al menu</a>
-		</div>
-		
-	  
-	</div>
-
-
 </div>
-
-<?php
-}
-?>

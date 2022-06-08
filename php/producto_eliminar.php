@@ -19,7 +19,7 @@
     	    $eliminar_producto=$eliminar_producto->prepare("DELETE FROM producto WHERE producto_id=:id");
     
     	    $eliminar_producto->execute([":id"=>$product_id_del]);
-    
+			
     	    if($eliminar_producto->rowCount()==1){
     
     	    	if(is_file("./img/producto/".$datos['producto_foto'])){
