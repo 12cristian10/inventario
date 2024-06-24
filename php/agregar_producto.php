@@ -1,11 +1,10 @@
 <?php
-require "../php/main.php";
+require_once "../php/main.php";
 
  if(isset($_POST['producto'])){
     
 	$producto_id=$_POST['producto'];
-
-	
+    
 	$productos=conexion();
 	$productos=$productos->query("SELECT * FROM producto WHERE producto_id = $producto_id");
 		
@@ -15,56 +14,73 @@ require "../php/main.php";
 
 
 		foreach($productos as $row){
+			
 			echo'
-        <div class="column">
+            <div class="column">
 		        <div>
 		    		<label>Codigo</label>
-		    		<input class="input" type="text" name="codigo_p" value="'.$row['producto_codigo'].'" disabled>
+		    		<input class="input" type="text" name="codigo_p" id="codigo_p" value="'.$row['producto_codigo'].'" readonly>
 		    	</div>
 		    </div>
 
-		    <div class="column">
-		    	<div class="control">
-		    		<label>Peso</label>
-		    		<input class="input" type="text" name="peso_p" value="'.$row['producto_peso'].'" disabled>
-		    	</div>
-		    </div>
-
+		   
 		    <div class="column">
 		    	<div class="control">
 		    		<label>Precio</label>
-		    		<input class="input" type="text" name="precio_p" value="'.$row['producto_precio'].'" disabled>
+		    		<input class="input" type="text" name="precio_p" id="precio_p" value="'.$row['producto_precio'].'" readonly>
 		    	</div>
 		    </div>
 
 		    <div class="column">
 		    	<div class="control">
 		    		<label>Stock</label>
-		    		<input class="input" type="text" name="stock_p" value="'.$row['producto_stock'].'" disabled>
+		    		<input class="input" type="text" name="stock_p" id="stock_p" value="'.$row['producto_stock'].'" readonly>
 		    	</div>
-		    </div>
+		    </div>';
+        
+		if($row['producto_stock']==0){
+			echo'<div class="column">
+			        <div class="notification is-warning is-light has-text-centered">
+			                <strong>¡PRODUCTO AGOTADO!</strong><br>
+		            </div>
+           		</div>
+           	</div>';
+		}else{
 
-		    <div class="column">
-		    	<div class="control">
-		    		<labe>Cantidad requerida</label>
-		    		<input class="input" type="text" name="unidades_p" pattern="[0-9]{1,25}" maxlength="25"  required>
-		    	</div>
-		    </div>
+			echo'
+			<div class="column">
+			<labe>Margen de ganancias</label>
+			<div class="field has-addons">
+			  
+				<p class="control">
+				
+			  <input class="input" type="number" name="utilidades" id="utilidades" min="1" max="100" required>
+				 </p>
+				  <p class="control">
+					<a class="button is-static">
+					  %
+					</a>
+				  </p>
+				
+	
+		</div>
+	</div>
+	
+			<div class="column">
+		    	    <div class="control">
+		    		    <labe>Cantidad requerida</label>
+		    		    <input class="input" type="number" name="unidades_p" id="unidades_p"  min="1" required>
+    		    	</div>
+    		    </div>
+            </div>';
 
-		    <div class="column pt-5">
-			    <button type="submit" class="button is-info is-rounded">Agregar</button>
-            </div>
-        </div>        
-	';
+		}	
+		
 		 }
 	}
 
 	   $productos=null; 
 
-}else{
-	echo'<h2> no hay </h2>';
 }
-
-
 
 ?> 

@@ -18,6 +18,6 @@ body,html{
 	min-width: 300px;
 }
 
-.form-inline{
-	display: inline-flex;
+.main-container{
+	background-image: url(../img/fondo.jpg);
 }

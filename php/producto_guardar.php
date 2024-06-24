@@ -7,15 +7,20 @@
 	$codigo=limpiar_cadena($_POST['producto_codigo']);
 	$nombre=limpiar_cadena($_POST['producto_nombre']);
     $peso=limpiar_cadena($_POST['producto_peso']);
+    $peso_unidad=limpiar_cadena($_POST['producto_pu']);
+    $volumen=limpiar_cadena($_POST['producto_volumen']);
+    $volumen_unidad=limpiar_cadena($_POST['producto_vu']);
+    $fecha=limpiar_cadena($_POST['producto_fecha']);
 
 	$precio=limpiar_cadena($_POST['producto_precio']);
 	$stock=limpiar_cadena($_POST['producto_stock']);
-	$categoria=limpiar_cadena($_POST['producto_categoria']);
+	$proveedor=limpiar_cadena($_POST['producto_proveedor']);
+    $categoria=limpiar_cadena($_POST['producto_categoria']);
 
-
+    
 
 	/*== Verificando campos obligatorios ==*/
-    if($codigo=="" || $nombre=="" || $peso=="" || $precio=="" || $stock=="" || $categoria=="" ){
+    if($codigo=="" || $nombre=="" || $proveedor=="" || $precio=="" || $stock=="" || $categoria=="" ){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
@@ -24,6 +29,16 @@
         ';
         exit();
     }
+    
+    if($peso=="" && $volumen=="" && $fecha==""){
+        echo '
+            <div class="notification is-danger is-light">
+                <strong>¡Ocurrio un error inesperado!</strong><br>
+                la descripcion del producto esta incompleta, debe asignar por lo menos un peso o un volumen o una fecha de caducidad 
+            </div>
+        ';
+        exit();
+    } 
 
 
     /*== Verificando integridad de los datos ==*/
@@ -47,32 +62,23 @@
         exit();
     }
 
-    if(verificar_datos("[0-9.]{1,50}",$peso)){
+
+
+    if((int) $precio<=0){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
-                El PESO no coincide con el formato solicitado
+                El PRECIO debe ser llenado con un valor mayor a 0
             </div>
         ';
         exit();
     }
 
-
-    if(verificar_datos("[0-9.]{1,25}",$precio)){
+    if((int) $stock<=0){
         echo '
             <div class="notification is-danger is-light">
                 <strong>¡Ocurrio un error inesperado!</strong><br>
-                El PRECIO no coincide con el formato solicitado
-            </div>
-        ';
-        exit();
-    }
-
-    if(verificar_datos("[0-9]{1,25}",$stock)){
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                El STOCK no coincide con el formato solicitado
+                El STOCK debe ser llenado con un valor mayor a 0
             </div>
         ';
         exit();
@@ -107,21 +113,7 @@
         exit();
     }
     $check_nombre=null;
-
-    /*==verificando peso ==*/
-    $check_peso=conexion();
-    $check_peso=$check_peso->query("SELECT producto_peso FROM producto WHERE producto_peso='$peso'");
-    if($check_peso->rowCount()>0){
-        echo '
-            <div class="notification is-danger is-light">
-                <strong>¡Ocurrio un error inesperado!</strong><br>
-                El CODIGO de BARRAS ingresado ya se encuentra registrado, por favor elija otro
-            </div>
-        ';
-        exit();
-    }
-    $check_peso=null;
-
+ 
 
     /*== Verificando categoria ==*/
     $check_categoria=conexion();
@@ -220,16 +212,21 @@
 
 	/*== Guardando datos ==*/
     $guardar_producto=conexion();
-    $guardar_producto=$guardar_producto->prepare("INSERT INTO producto(producto_codigo,producto_nombre,producto_peso,producto_precio,producto_stock,producto_foto,categoria_id,usuario_id) VALUES(:codigo,:nombre,:peso,:precio,:stock,:foto,:categoria,:usuario)");
+    $guardar_producto=$guardar_producto->prepare("INSERT INTO producto(producto_codigo,producto_nombre,producto_peso,producto_pmedida,producto_volumen,producto_vmedida,producto_fecha,producto_precio,producto_stock,producto_foto,categoria_id,usuario_id,proveedor_id) VALUES(:codigo,:nombre,:peso,:unidadp,:volumen,:unidadv,:caducidad,:precio,:stock,:foto,:categoria,:usuario,:proveedor)");
 
     $marcadores=[
         ":codigo"=>$codigo,
         ":nombre"=>$nombre,
         ":peso"=>$peso,
+        ":unidadp"=>$peso_unidad,
+        ":volumen"=>$volumen,
+        ":unidadv"=>$volumen_unidad,
+        ":caducidad"=>$fecha,
         ":precio"=>$precio,
         ":stock"=>$stock,
         ":foto"=>$foto,
         ":categoria"=>$categoria,
+        ":proveedor"=>$proveedor,
         ":usuario"=>$_SESSION['id']
     ];
 
@@ -242,6 +239,30 @@
                 El producto se registro con exito
             </div>
         ';
+
+        $recolectar_datos=conexion();
+        $recolectar_datos=$recolectar_datos->query("SELECT * FROM producto WHERE producto_codigo='$codigo'");
+        if($recolectar_datos->rowCount()>0){
+        
+            $data=$recolectar_datos->fetch();
+           $id=$data['producto_id'];
+           $fecha_ingreso=$data['producto_ingreso'];
+           $cantidad=$data['producto_stock']; 
+
+           $guardar_reporte=conexion();
+           $guardar_reporte=$guardar_reporte->prepare("INSERT INTO reportes(fecha_ingreso,cantidad_ingresada,producto_id) VALUES(:ingreso,:unidadesi,:id)");
+
+           $info=[
+            ":id"=>$id,
+            ":ingreso"=>$fecha_ingreso,
+            ":unidadesi"=>$cantidad     
+        ];
+           
+           $guardar_reporte->execute($info);
+           $guardar_reporte=null;
+        }
+        $recolectar_datos=null;
+        
     }else{
 
     	if(is_file($img_dir.$foto)){

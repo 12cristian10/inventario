@@ -23,6 +23,26 @@
                     <a href="index.php?vista=user_list" class="navbar-item">Lista</a>
                     <a href="index.php?vista=user_search" class="navbar-item">Buscar</a>
                 </div>
+            </div> 
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">Proveedores</a>
+
+                <div class="navbar-dropdown">
+                    <a href="index.php?vista=prove_new" class="navbar-item">Nuevo</a>
+                    <a href="index.php?vista=prove_list" class="navbar-item">Lista</a>
+                    <a href="index.php?vista=prove_search" class="navbar-item">Buscar</a>
+                </div>
+            </div>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">Clientes</a>
+
+                <div class="navbar-dropdown">
+                    <a href="index.php?vista=client_new" class="navbar-item">Nuevo</a>
+                    <a href="index.php?vista=client_list" class="navbar-item">Lista</a>
+                    <a href="index.php?vista=client_search" class="navbar-item">Buscar</a>
+                </div>
             </div>
 
             <div class="navbar-item has-dropdown is-hoverable">
@@ -53,6 +73,14 @@
                     <a href="index.php?vista=sale_new" class="navbar-item">Nueva</a>
                     <a href="index.php?vista=sale_list" class="navbar-item">Lista</a>
                     <a href="index.php?vista=sale_search" class="navbar-item">Buscar</a>
+                </div>
+            </div>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">Reportes</a>
+
+                <div class="navbar-dropdown">
+                    <a href="index.php?vista=inventory_report" class="navbar-item">Inventario</a>
                 </div>
             </div>
 

@@ -26,7 +26,11 @@
     });
 </script>
 <script src="./js/ajax.js"></script>
+<script src="./js/add_sale_product.js"></script>
 <script src="./js/img_select.js"></script> 
 <script src="./js/input_select.js"></script>
+<script src="./js/modal.js"></script>
+<script src="./js/Factura.js"></script>
+
 
 

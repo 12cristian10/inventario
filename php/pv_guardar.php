@@ -2,13 +2,16 @@
 require_once "../inc/session_start.php";
 require_once "../php/main.php";
 
+
 $codigo=$_SESSION['venta_codigo'];
 $producto_id=$_POST['producto'];
 $cantidad=limpiar_cadena($_POST['unidades_p']);
-
+$utilidades=limpiar_cadena($_POST['utilidades']);
+$total=0;
 
 /*== Verificando campos obligatorios ==*/
-if($cantidad==""){
+if($cantidad=="" || $producto_id=="null" || $utilidades=="" ){
+    
 	echo '
 		<div class="notification is-danger is-light">
 			<strong>¡Ocurrio un error inesperado!</strong><br>
@@ -19,15 +22,38 @@ if($cantidad==""){
 }
 
 /*== Verificando integridad de los datos ==*/
-if(verificar_datos("[0-9]{1,25}",$cantidad)){
+if((int) $cantidad <=0){
+    
 	echo '
 		<div class="notification is-danger is-light">
 			<strong>¡Ocurrio un error inesperado!</strong><br>
-			La CANTIDAD REQUERIDA no coincide con el formato solicitado
+			La CANTIDAD REQUERIDA debe ser un valor mayor a 0
 		</div>
 	';
 	exit();
-} 
+}
+
+if((int) $utilidades<=0){
+    
+	echo '
+		<div class="notification is-danger is-light">
+			<strong>¡Ocurrio un error inesperado!</strong><br>
+			El Margen de ganancia debe ser un valor mayor a 0
+		</div>
+	';
+	exit();
+}
+
+if((int) $utilidades>100){
+    
+	echo '
+		<div class="notification is-danger is-light">
+			<strong>¡Ocurrio un error inesperado!</strong><br>
+			El Margen de ganancia no debe superar el 100%
+		</div>
+	';
+	exit();
+}
 
    /*==verificando peso ==*/
    $check_cantidad=conexion();
@@ -39,6 +65,7 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
        $stock = $resultado['producto_stock'];
          
 	   if($cantidad > $resultado['producto_stock']){
+       
 		    echo '
 		        <div class="notification is-danger is-light">
 		        	<strong>¡Ocurrio un error inesperado!</strong><br>
@@ -47,8 +74,8 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
 	        ';
 	        exit();
 	   }else{
-           $precio=$resultado['producto_precio'];
-           $subtotal=$cantidad*$precio;
+           $precio_venta=(int)($resultado['producto_precio']/(1-((double)$utilidades/100)));
+           $subtotal=$cantidad*$precio_venta;
         
        }
    	  
@@ -57,21 +84,23 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
 
    	/*== Guardando datos ==*/
        $guardar_p_sale=conexion();
-       $guardar_p_sale=$guardar_p_sale->prepare("INSERT INTO producto_vendido(venta_codigo,producto_id,pv_stock,pv_total) VALUES(:codigo,:id,:cantidad,:sub)");
+       $guardar_p_sale=$guardar_p_sale->prepare("INSERT INTO producto_vendido(venta_codigo,producto_id,pv_stock,precio_unitario,pv_total,pv_utilidad) VALUES(:codigo,:id,:cantidad,:precio,:sub,:utilidad)");
    
        $marcadores=[
            ":codigo"=>$codigo,
            ":id"=>$producto_id,
            ":cantidad"=>$cantidad,
-           ":sub"=>$subtotal
+           ":precio"=>$precio_venta,
+           ":sub"=>$subtotal,
+           ":utilidad"=>$utilidades
        ];
    
        $guardar_p_sale->execute($marcadores);
-   
+    
        if($guardar_p_sale->rowCount()==1){
            
         $stock=$stock-$cantidad;
-
+        $total=$subtotal+$total;
         $actualizar_producto=conexion();
         $actualizar_producto=$actualizar_producto->prepare("UPDATE producto SET producto_stock=:stock WHERE producto_id=:id");
 
@@ -81,6 +110,7 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
         ];
         
         $actualizar_producto->execute($marcadores);
+        
            echo '
                <div class="notification is-info is-light">
                    <strong>¡PRODUCTO REGISTRADO!</strong><br>
@@ -88,7 +118,7 @@ if(verificar_datos("[0-9]{1,25}",$cantidad)){
                </div>
            ';
        }else{
-
+       
    
            echo '
                <div class="notification is-danger is-light">

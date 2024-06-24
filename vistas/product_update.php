@@ -19,53 +19,149 @@
         	$datos=$check_producto->fetch();
 	?>
 
-	<div class="form-rest mb-6 mt-6"></div>
+<div class="form-rest mb-6 mt-6"></div>
 	
 	<h2 class="title has-text-centered"><?php echo $datos['producto_nombre']; ?></h2>
 
 	<form action="./php/producto_actualizar.php" method="POST" class="FormularioAjax" autocomplete="off" >
-
-		<input type="hidden" name="producto_id" value="<?php echo $datos['producto_id']; ?>" required >
-
+	   
+	    <input type="hidden" name="producto_id" value="<?php echo $datos['producto_id']; ?>" required >
 		<div class="columns">
 		  	<div class="column">
 		    	<div class="control">
 					<label>Numero de factura</label>
-				  	<input class="input" type="text" name="producto_codigo" pattern="[a-zA-Z0-9- ]{1,70}" maxlength="70" required value="<?php echo $datos['producto_codigo']; ?>" >
+				  	<input class="input" type="text" name="producto_codigo" pattern="[a-zA-Z0-9- ]{1,70}" maxlength="70" required value="<?php echo $datos['producto_codigo']; ?>">
 				</div>
 		  	</div>
 		  	<div class="column">
 		    	<div class="control">
 					<label>Nombre</label>
-				  	<input class="input" type="text" name="producto_nombre" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}" maxlength="70" required value="<?php echo $datos['producto_nombre']; ?>" >
+				  	<input class="input" type="text" name="producto_nombre" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,$#\-\/ ]{1,70}" maxlength="70" required  value="<?php echo $datos['producto_nombre']; ?>">
+				</div>
+		  	</div>
+			  <div class="column">
+				<label>Proveedor</label><br>
+		    	<div class="select">
+				  	<select name="producto_proveedor" required>
+					    <?php
+    						$proveedores=conexion();
+    						$proveedores=$proveedores->query("SELECT * FROM proveedor");
+    						if($proveedores->rowCount()>0){
+    							$proveedores=$proveedores->fetchAll();
+    							foreach($proveedores as $row){
+    								if($datos['proveedor_id']==$row['proveedor_id']){
+    									echo '<option value="'.$row['proveedor_id'].'" selected="" >'.$row['proveedor_nombre'].' (Actual)</option>';
+    								}else{
+    									echo '<option value="'.$row['proveedor_id'].'" >'.$row['proveedor_nombre'].'</option>';
+    								}
+				    			}
+				   			}
+				   			$categorias=null;
+				    	?>
+				  	</select>
 				</div>
 		  	</div>
 		</div>
+
 		<div class="columns">
-		  	<div class="column">
+			<div class="column">
+				<label>Peso</label>
+			    <div class="field has-addons">
+                    <p class="control">
+					    <input class="input" type="number" name="producto_peso" value="<?php echo $datos['producto_peso'];?>">
+                    </p>
+                    <p class="control">
+					    <span class="select" >
+                            <select name="producto_pu">
+							    <?php
+
+								switch($datos['producto_pmedida']){
+									case "Kg":
+										echo '<option selected value="Kg">Kg</option>
+                                              <option value="g">g</option>
+                                              <option value="Lb">Lb</option>';
+									break;
+									case "g":
+										echo '<option value="Kg">Kg </option>
+                                              <option selected value="g">g</option>
+                                              <option value="Lb">Lb</option>';
+									break;
+									case "Lb":
+										echo '<option value="Kg">Kg </option>
+                                              <option value="g">g</option>
+                                              <option selected value="Lb">Lb</option>';
+									break;
+
+								}
+				    	        ?>
+                            </select>
+                        </span>
+                    </p>
+				</div>	
+            </div>
+			<div class="column">
+				<label>Volumen</label>
+			    <div class="field has-addons">
+                    <p class="control">
+					    <input class="input" type="number" name="producto_volumen" value="<?php echo $datos['producto_volumen']; ?>">
+                    </p>
+                    <p class="control">
+					    <span class="select">
+                            <select name="producto_vu">
+							<?php
+                                switch($datos['producto_vmedida']){
+                                	case "Lt":
+                                		echo '<option selected value="Lt">Lt</option>
+                                			  <option value="ml">ml</option>
+                                			  <option value="m3">m3</option>';
+                                	break;
+                                	case "ml":
+                                		echo '<option value="Lt">Lt</option>
+                                			  <option selected value="ml">ml</option>
+                                			  <option value="m3">m3</option>';
+                                	break;
+                                	case "m3":
+                                		echo '<option value="Lt">Lt</option>
+                                			  <option value="ml">ml</option>
+                                			  <option selected value="m3">m3</option>';
+                                	break;
+                                
+                                }
+                            ?>
+                            </select>
+                        </span>
+                    </p>
+				</div>
+            </div>
+
+			<div class="column">
 		    	<div class="control">
-					<label>Peso</label>
-				  	<input class="input" type="text" name="producto_peso" pattern="[0-9.]{1,25}" maxlength="25" required value="<?php echo $datos['producto_peso']; ?>" >
+					<label>Fecha de caducidad</label>
+				  	<input class="input" type="date" name="producto_fecha" value="<?php echo $datos['producto_fecha'];?>">
 				</div>
 		  	</div>
+		    	
+		</div>
+
+
 		<div class="columns">
 		  	<div class="column">
 		    	<div class="control">
 					<label>Precio</label>
-				  	<input class="input" type="text" name="producto_precio" pattern="[0-9.]{1,25}" maxlength="25" required value="<?php echo $datos['producto_precio']; ?>" >
+				  	<input class="input" type="number" name="producto_precio" min="1" required value="<?php echo $datos['producto_precio']; ?>">
 				</div>
 		  	</div>
 		  	<div class="column">
 		    	<div class="control">
 					<label>Stock</label>
-				  	<input class="input" type="text" name="producto_stock" pattern="[0-9]{1,25}" maxlength="25" required value="<?php echo $datos['producto_stock']; ?>" >
+				  	<input class="input" type="number" name="producto_stock" min="1" required value="<?php echo $datos['producto_stock']; ?>">
 				</div>
 		  	</div>
 		  	<div class="column">
 				<label>Categoría</label><br>
-		    	<div class="select is-rounded">
-				  	<select name="producto_categoria" >
-				    	<?php
+		    	<div class="select">
+				  	<select name="producto_categoria" required>
+						<?php
     						$categorias=conexion();
     						$categorias=$categorias->query("SELECT * FROM categoria");
     						if($categorias->rowCount()>0){
@@ -84,10 +180,12 @@
 				</div>
 		  	</div>
 		</div>
+
 		<p class="has-text-centered">
 			<button type="submit" class="button is-success is-rounded">Actualizar</button>
 		</p>
 	</form>
+
 	<?php 
 		}else{
 			include "./inc/error_alert.php";
