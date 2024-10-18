@@ -2,7 +2,7 @@
 	
 	# Conexion a la base de datos #
 	function conexion(){
-		$pdo = new PDO('mysql:host=localhost;dbname=pdo', 'root', '');
+		$pdo = new PDO('mysql:host=localhost;dbname=pdo', 'root', 'Crdapamo1210*');
 		return $pdo;
 	}
 
@@ -11,9 +11,9 @@
 	function verificar_datos($filtro,$cadena){
 		if(preg_match("/^".$filtro."$/", $cadena)){
 			return false;
-        }else{
-            return true;
-        }
+        	}else{
+           		 return true;
+       		}
 	}
 
 
